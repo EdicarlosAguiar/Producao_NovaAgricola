@@ -6,6 +6,7 @@ package Formularios;
 
 import FormNotificacao.CONFUPDATEPROD;
 import FormNotificacao.Confirmacao;
+import FormNotificacao.JD_FATO_PROD;
 import FormNotificacao.MSGA_PDV01;
 import FormNotificacao.SelecaoInvalida;
 import FormNotificacao.campoObrigatorio;
@@ -79,7 +80,7 @@ import util.utilitario;
  * @author Edicarlos
  */
 public class BASE_PRODUCAO extends javax.swing.JFrame {
-
+    
     String op;
     float totalHectare;
     float hectare;
@@ -92,60 +93,60 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     float valorFinal;
     String codCentroCusto, nomeCentroCusto;
     String codEquipamento, nomeEquipamento;
-
+    
     public String getCodEquipamento() {
         return codEquipamento;
     }
-
+    
     public void setCodEquipamento(String codEquipamento) {
         this.codEquipamento = codEquipamento;
     }
-
+    
     public String getNomeEquipamento() {
         return nomeEquipamento;
     }
-
+    
     public void setNomeEquipamento(String nomeEquipamento) {
         this.nomeEquipamento = nomeEquipamento;
     }
-
+    
     public String getCodCentroCusto() {
         return codCentroCusto;
     }
-
+    
     public void setCodCentroCusto(String codCentroCusto) {
         this.codCentroCusto = codCentroCusto;
     }
-
+    
     public String getNomeCentroCusto() {
         return nomeCentroCusto;
     }
-
+    
     public void setNomeCentroCusto(String nomeCentroCusto) {
         this.nomeCentroCusto = nomeCentroCusto;
     }
-
+    
     Conexao conecta = new Conexao();
-
+    
     DateTimeFormatter dataReferencia1 = DateTimeFormatter.ofPattern("yyyyMMdd");
     String dataReferencia = dataReferencia1.format(LocalDateTime.now());
-
+    
     DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm:SS");
     String horaAtual = hora.format(LocalDateTime.now());
-
+    
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     String dataAtual = dtf.format(LocalDateTime.now());
-
+    
     String reqSelecionada;
-
+    
     public String getReqSelecionada() {
         return reqSelecionada;
     }
-
+    
     public void setReqSelecionada(String reqSelecionada) {
         this.reqSelecionada = reqSelecionada;
     }
-
+    
     ModelUsuario user = new ModelUsuario();
     static ArrayList<String> produtos = new ArrayList();
     static ArrayList<String> centro_custo = new ArrayList();
@@ -153,39 +154,39 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     static ArrayList<String> opAgregada = new ArrayList();
     static ArrayList<String> Ops = new ArrayList();
     static ArrayList<String> equipamento = new ArrayList();
-
+    
     String ordProdAgregadas;
-
+    
     public BASE_PRODUCAO() {
-
+        
         UIManager.put("ComboBox.background", new ColorUIResource(Color.WHITE));
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new java.awt.Color(0, 204, 204)));
         UIManager.put("ComboBox.selectionForeground", new ColorUIResource(new Color(0, 102, 102)));
-
+        
         initComponents();
         lblMsgExclusao.setVisible(false);
         carregaTabela();
         this.setExtendedState(MAXIMIZED_BOTH);
         configInicias();
-
+        
         utilitario util = new utilitario();
         this.setTitle(util.getTituloPrincipal());
         util.inserirIcon(this);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy" + " - " + "HH:mm:ss");
         lblDatahora.setText("Usuario: " + user.getUsuarioLogado() + " | Data-Hora: " + dtf.format(LocalDateTime.now()));
         lblDadosEmpresa.setText(util.getDadosEmpresaRodape());
-
+        
         configIniciasForMOvimentacoes();
         carregaOP();
         btnConfirmar.setBackground(Color.WHITE);
-
+        
     }
-
+    
     public void GeraCodBarra() {
-
+        
         Document documentoPDF = new Document(PageSize.A4, 5, 5, 5, 5);
         OutputStream outPutStream = null;
-
+        
         PdfWriter writer;
         try {
             writer = PdfWriter.getInstance(documentoPDF, new FileOutputStream("C:\\Users\\Edicarlos\\Documents\\DOCUMENTOS EDICARLOS\\DOCUMENTOTEST.pdf"));
@@ -193,34 +194,34 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             // BarcodeEAN codeEAN = new BarcodeEAN();
 
             Barcode128 codeEAN = new Barcode128();
-
+            
             codeEAN.setCodeType(Barcode128.CODE128);
             codeEAN.setCode("212131313131");
             Image imageEAN = codeEAN.createImageWithBarcode(cb, null, null);
-
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BASE_PRODUCAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(BASE_PRODUCAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public void configIniciasForMOvimentacoes() {
         Cores cor = new Cores();
         int maxHeaderHeight = 30;
         Dimension d = new Dimension(TabelaItens.getTableHeader().getPreferredSize().width, maxHeaderHeight);
-
+        
         TabelaItens.getTableHeader().setPreferredSize(d);
         tabelaOp.getTableHeader().setPreferredSize(d);
-
+        
         tabelaOp.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());//Cor do preenchimento do cabeçalho
         tabelaOp.getTableHeader().setForeground(cor.getCorFonteCabecalho()); // Cor da fonte do cabeçalho
 
         tabelaOp.getTableHeader().setOpaque(false);
         tabelaOp.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, 10));
         tabelaOp.setForeground(cor.getCorFonteDadosTabela());
-
+        
         TabelaItens.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());//Cor do preenchimento do cabeçalho
         TabelaItens.getTableHeader().setForeground(cor.getCorFonteCabecalho()); // Cor da fonte do cabeçalho
 
@@ -228,33 +229,33 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         TabelaItens.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.NORMAL, 11));
         TabelaItens.setForeground(cor.getCorFonteDadosTabela());
         txtProduto.setBackground(Color.WHITE);
-
+        
     }
-
+    
     public void CorLinhaTabelaForMovimentacoes() {
         Cores cor = new Cores();
-
+        
         TabelaItens.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int colum) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, colum);
-
+                
                 Color c = cor.getCorLinhaImparTabela();
                 Color d = cor.getCorFundoLinhaDeletada();
                 int indice = Integer.parseInt(table.getValueAt(row, 0).toString());
-
+                
                 if (indice % 2 != 0) {
                     c = c;
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
                     centro.setHorizontalAlignment(SwingConstants.CENTER);
-
+                    
                     TabelaItens.getColumnModel().getColumn(1).setCellRenderer(centro);//Item
                     TabelaItens.getColumnModel().getColumn(2).setCellRenderer(centro);//Codigo INterno
                     TabelaItens.getColumnModel().getColumn(3).setCellRenderer(esquerda);//Produto
@@ -268,11 +269,11 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     centro.setBackground(c);
                     indice = indice + 1;
                 } else {
-
+                    
                     c = cor.getCorLinhaParTabela();
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
@@ -291,30 +292,30 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     esquerda.setBackground(c);
                     centro.setBackground(c);
                     indice = indice + 1;
-
+                    
                 }
-
+                
                 return label;
             }
-
+            
         });
-
+        
     }
-
+    
     public void configInicias() {
-
+        
         Cores cor = new Cores();
         //  tabela.setSelectionBackground(cor.getCorLinhaSelecionada());
         int maxHeaderHeight = 40;
         Dimension d = new Dimension(tabela.getTableHeader().getPreferredSize().width, maxHeaderHeight);
         tabela.getTableHeader().setPreferredSize(d);
-
+        
     }
-
+    
     public void configuraTabelaItensRequisicao() {
-
+        
         Cores cor = new Cores();
-
+        
         TabelaItens.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int colum) {
@@ -323,61 +324,61 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 // 
                 Color c = cor.getCorLinhaImparTabela();
                 int indice = Integer.parseInt(table.getValueAt(row, 0).toString());
-
+                
                 if (indice % 2 != 0) {
                     c = c;
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     TabelaItens.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(3).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(4).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(5).setCellRenderer(direita);
                     TabelaItens.getColumnModel().getColumn(6).setCellRenderer(direita);
-
+                    
                     direita.setBackground(c);
                     esquerda.setBackground(c);
-
+                    
                 } else {
                     c = cor.getCorLinhaParTabela();
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     TabelaItens.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(3).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(4).setCellRenderer(esquerda);
                     TabelaItens.getColumnModel().getColumn(5).setCellRenderer(direita);
                     TabelaItens.getColumnModel().getColumn(6).setCellRenderer(direita);
-
+                    
                     esquerda.setBackground(c);
                     direita.setBackground(c);
-
+                    
                 }
 
                 // 
                 return label;
             }
-
+            
         });
-
+        
     }
-
+    
     public void configuraTabelaOp() {
-
+        
         Cores cor = new Cores();
-
+        
         tabelaOp.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int colum) {
@@ -386,55 +387,55 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 // 
                 Color c = cor.getCorLinhaImparTabela();
                 int indice = Integer.parseInt(table.getValueAt(row, 0).toString());
-
+                
                 if (indice % 2 != 0) {
                     c = c;
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     tabelaOp.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     tabelaOp.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     tabelaOp.getColumnModel().getColumn(3).setCellRenderer(esquerda);
-
+                    
                     direita.setBackground(c);
                     esquerda.setBackground(c);
-
+                    
                 } else {
                     c = cor.getCorLinhaParTabela();
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     tabelaOp.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     tabelaOp.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     tabelaOp.getColumnModel().getColumn(3).setCellRenderer(esquerda);
-
+                    
                     esquerda.setBackground(c);
                     direita.setBackground(c);
-
+                    
                 }
 
                 // 
                 return label;
             }
-
+            
         });
-
+        
     }
-
+    
     public void configuraTabelaIBrowser() {
-
+        
         Cores cor = new Cores();
-
+        
         tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int colum) {
@@ -443,17 +444,17 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 // 
                 Color c = cor.getCorLinhaImparTabela();
                 int indice = Integer.parseInt(table.getValueAt(row, 0).toString());
-
+                
                 if (indice % 2 != 0) {
                     c = c;
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(3).setCellRenderer(esquerda);
@@ -462,20 +463,20 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     tabela.getColumnModel().getColumn(6).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(7).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(8).setCellRenderer(direita);
-
+                    
                     direita.setBackground(c);
                     esquerda.setBackground(c);
-
+                    
                 } else {
                     c = cor.getCorLinhaParTabela();
-
+                    
                     label.setBackground(c);
-
+                    
                     DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
                     DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
                     direita.setHorizontalAlignment(SwingConstants.RIGHT);
                     esquerda.setHorizontalAlignment(SwingConstants.LEFT);
-
+                    
                     tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(2).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(3).setCellRenderer(esquerda);
@@ -484,41 +485,41 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     tabela.getColumnModel().getColumn(6).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(7).setCellRenderer(esquerda);
                     tabela.getColumnModel().getColumn(8).setCellRenderer(direita);
-
+                    
                     esquerda.setBackground(c);
                     direita.setBackground(c);
-
+                    
                 }
 
                 // 
                 return label;
             }
-
+            
         });
-
+        
     }
-
+    
     public void carregaTabela() {
         Conexao conn = new Conexao();
         Cores cor = new Cores();
-
+        
         tabela.getTableHeader().setOpaque(false);
         tabela.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
         tabela.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, 10));
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-
+        
         modelo.setNumRows(0);
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("select *from producao order by id desc limit 200");
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 //    JOptionPane.showConfirmDialog(null, "Começou");
                 DecimalFormat df = new DecimalFormat("#,##0.0000");
@@ -526,7 +527,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 String quantidadeFormatada = df.format(quantidade);
                 float cachos = rs.getFloat("cacho");
                 String cachoFormatada = df.format(cachos);
-
+                
                 {
                     modelo.addRow(new Object[]{
                         linha,
@@ -537,7 +538,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                         rs.getString("und"),//Unidade
                         quantidadeFormatada,//Unidade
                         rs.getString("op"),//Ordem de Producao
-                    cachoFormatada,//Ordem de Producao
+                        cachoFormatada,//Ordem de Producao
                     });
                 }
                 linha = linha + 1;
@@ -545,12 +546,12 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             conn.getConexao().close();
         } catch (Exception e) {
         }
-
+        
         configuraTabelaIBrowser();
     }
-
+    
     public void somaCusto() {
-
+        
         double somaTotal = 0;
         for (int i = 0; i < TabelaItens.getRowCount(); i++) {
             somaTotal += Double.parseDouble(TabelaItens.getValueAt(i, 5).toString().toString().replace(".", "").replaceAll(",", "."));
@@ -558,9 +559,9 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         String totalFormatado = df.format(somaTotal);
         lblProducaoTotal.setText(totalFormatado);
-
+        
     }
-
+    
     public void somaHectare() {
         totalHectare = 0;
         double somaTotal = 0;
@@ -569,28 +570,28 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         }
         lblTotalHectares.setText(String.valueOf(totalHectare));
     }
-
+    
     public void carregaDadosNoArray() {
-
+        
         Conexao conn = new Conexao();
         Cores cor = new Cores();
-
+        
         requisicao.clear();
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("select data,documento,tipoMov,op_agregada,codProd,produto,"
                     + "unidade,sum(quantidade) as quantidade from requisicao where documento =?"
                     + "group by codProd ");
-
+            
             pst.setString(1, reqSelecionada);
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
-
+                
                 DecimalFormat df = new DecimalFormat("#,##0.0000");
                 String quantidadeFormatada = df.format(rs.getFloat("quantidade"));
 
@@ -611,23 +612,23 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         }
         //   JOptionPane.showMessageDialog(this, produtos);
     }
-
+    
     public void carregaArrayProdutos() {
-
+        
         Conexao conn = new Conexao();
         Cores cor = new Cores();
-
+        
         produtos.clear();
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("select codigo, nome, und, atual,valor, custoMedio "
                     + "from tb_produtos where codCat = '10' order by codigo");
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
 
                 //Preenchendo a Lista de Produtos
@@ -645,22 +646,22 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         }
         //   JOptionPane.showMessageDialog(this, produtos);
     }
-
+    
     public void carregaArrayCentroCusto() {
-
+        
         Conexao conn = new Conexao();
         Cores cor = new Cores();
-
+        
         centro_custo.clear();
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("select CODIGO, DESCRICAO from centro_custo");
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
 
                 //Preenchendo a Lista de Produtos
@@ -674,37 +675,37 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         }
         //   JOptionPane.showMessageDialog(this, produtos);
     }
-
+    
     public void excluirRegistro() {
-
+        
         try {
-
+            
             Conexao conn = new Conexao();
             PreparedStatement pst;
-
+            
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("delete from producao where documento=?");
             pst.setString(1, txtDocumento.getText());
             pst.executeUpdate();
-
+            
             pst.close();
-
+            
             carregaDadosNoArray();
             carregaTabela();
-
+            
         } catch (Exception e) {
         }
         Confirmacao conf = new Confirmacao(this, true);
         conf.textoExclusaoProducao();
         conf.setVisible(true);
-
+        
     }
-
+    
     public void parametrosExcluir() {
         lblTituloForm.setText("Produção - Excluir");
         painelCabecalho.setEnabled(false);
-
+        
     }
 
     /**
@@ -824,7 +825,15 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             new String [] {
                 "ID", "Data Colheita", "Documento", "Codigo", "Produto", "Und", "Quantidae", "Odem de Prod", "Cachos", ""
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabela.setFillsViewportHeight(true);
         tabela.setGridColor(new java.awt.Color(239, 236, 236));
         tabela.setRowHeight(25);
@@ -832,6 +841,11 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaMouseClicked(evt);
+            }
+        });
+        tabela.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tabela);
@@ -1322,9 +1336,9 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
@@ -1679,26 +1693,26 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         /*        JD_REQ req = new JD_REQ(this, true);
         req.setVisible(true);*/
-
+        
         CardLayout cl = (CardLayout) painelCorpo.getLayout();
         cl.show(painelCorpo, "CardLancamentos");
-
+        
         geraNumeroProducao();
         ConsultaProduto2 prod = new ConsultaProduto2(this, true);
         prod.carregaArrayProdutos();
-
+        
         painelTituloForm.setBackground(new Color(94, 110, 110));
         lblTituloForm.setForeground(new Color(255, 255, 255));
         lblTituloForm.setText("Produção - Incluir");
         lblMsgExclusao.setVisible(false);
-
+        
         txtData.requestFocus();
         txtData.setText(dataAtual);
-
+        
         if (txtDocumento.getText().equals("")) {
             txtDocumento.setText("000001");
         } else {
-
+            
         }
     }//GEN-LAST:event_btnIncluirActionPerformed
 
@@ -1738,7 +1752,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             lblMsgExclusao.setVisible(true);
             lblMsgExclusao.setText(" Atenção...! Essa operação não poderá ser desfeita após a confirmação!");
             lblMsgExclusao.setForeground(new Color(51, 51, 51));
-
+            
         }
         tabela.clearSelection();
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -1770,27 +1784,27 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
         Conexao conn = new Conexao();
         Cores cor = new Cores();
-
+        
         tabela.getTableHeader().setOpaque(false);
         tabela.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
         tabela.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, 10));
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-
+        
         modelo.setNumRows(0);
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
             pst = conn.getConexao().prepareStatement("select * from tb_produtos where nome LIKE? order by nome");
-
+            
             String pesquisa = txtPesquisa.getText();
             pst.setString(1, pesquisa + "%");
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 //    JOptionPane.showConfirmDialog(null, "Começou");
 
@@ -1798,7 +1812,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 Double preco = Double.parseDouble(rs.getString(15).replace(".", "").replaceAll(",", "."));
                 String precoVenda = df.format(preco);
                 String status = rs.getString(8);
-
+                
                 if (status == "N") {
                     status = "Bloqueado";
                 } else {
@@ -1829,7 +1843,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
     //Metodos da Tela de Movimentações
     public void addOp() {
-
+        
         DefaultTableModel model = (DefaultTableModel) tabelaOp.getModel();
         model.addRow(new Object[]{
             model.getRowCount() + 1,
@@ -1839,30 +1853,30 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         );
         configuraTabelaOp();
     }
-
+    
     public void carregaOP() {
-
+        
         try {
-
+            
             PreparedStatement pst = null;
             ResultSet rs;
             pst = conecta.getConexao().prepareStatement("select ordem_pro from plantio");
-
+            
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
-
+                
                 cbOp.addItem(rs.getString("ordem_pro"));
-
+                
             }
-
+            
             conecta.getConexao().close();
-
+            
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     public void addProduto() {
         String cacho;
         if (txtCacho.getText().equals("")) {
@@ -1870,10 +1884,10 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         } else {
             cacho = txtCacho.getText();
         }
-
+        
         DecimalFormat df = new DecimalFormat("#,##0.00");
         String custoFormatado = df.format(custoTotal);
-
+        
         DefaultTableModel model = (DefaultTableModel) TabelaItens.getModel();
         model.addRow(new Object[]{
             TabelaItens.getRowCount() + 1,
@@ -1884,7 +1898,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             txtQuantidade.getText(),
             cacho,}
         );
-
+        
         configuraTabelaItensRequisicao();
         txtCodigo.setText("");
         txtProduto.setText("");
@@ -1892,9 +1906,9 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         txtQuantidade.setText("");
         txtCacho.setText("");
         txtCodigo.requestFocus();
-
+        
     }
-
+    
     public void buscaDadosRequisicao() {
         Conexao conn = new Conexao();
         Cores cor = new Cores();
@@ -1904,11 +1918,11 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
         tabela.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, 10));*/
         DefaultTableModel modelo = (DefaultTableModel) TabelaItens.getModel();
-
+        
         modelo.setNumRows(0);
-
+        
         try {
-
+            
             PreparedStatement pst;
             ResultSet rs;
             int linha = 1;
@@ -1917,16 +1931,16 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     + "group by codProduto");
             pst.setString(1, reqSelecionada);
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 txtData.setText(rs.getString(2));
                 txtDocumento.setText(rs.getString(3));
                 cbSemana.setSelectedItem("semana");
-
+                
                 DecimalFormat df = new DecimalFormat("#,##0.0000");
                 float quantidade = rs.getFloat("qtde");
                 String quantidadeFormatada = df.format(quantidade);
-
+                
                 {
 
                     //Preenche tabelas com Produtos
@@ -1945,10 +1959,10 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar dados" + e);
         }
-
+        
         configuraTabelaIBrowser();
     }
-
+    
     public void buscaProduto() {
         int totalItensArray = produtos.size();
         int indice = 0;
@@ -1959,15 +1973,15 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             //   JOptionPane.showMessageDialog(this, "Total tentativas " + indice);
 
             if (txtCodigo.getText().equals(produtos.get(indice))) {
-
+                
                 txtCodigo.setText(produtos.get(indice));
                 txtProduto.setText(produtos.get(indice + 1));
-
+                
                 estoque = Float.parseFloat(produtos.get(indice + 3));
                 valor = Float.parseFloat(produtos.get(indice + 4));
                 custoM = Float.parseFloat(produtos.get(indice + 5));
                 busca = true;
-
+                
             } else if (totalItensArray - 4 < indice) {
                 busca = true;
             } else {
@@ -1975,49 +1989,49 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void geraNumeroProducao() {
         try {
             Conexao conn = new Conexao();
             PreparedStatement pst = null;
             ResultSet rs;
             pst = conn.getConexao().prepareStatement("select documento from producao");
-
+            
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 int numero = rs.getInt("documento") + 1;
-
+                
                 if (numero < 10) {
                     String numetoReq = "00000" + numero;
                     txtDocumento.setText(numetoReq);
                 } else if (numero < 100) {
                     String numetoReq = "0000" + numero;
                     txtDocumento.setText(numetoReq);
-
+                    
                 } else if (numero < 1000) {
                     String numetoReq = "000" + numero;
                     txtDocumento.setText(numetoReq);
-
+                    
                 } else {
                     String numetoReq = "00" + numero;
                     txtDocumento.setText(numetoReq);
-
+                    
                 }
-
+                
             }
-
+            
             conn.getConexao().close();
             pst.close();
             rs.close();
-
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao Conectar com banco!" + ex);
         }
     }
-
+    
     public void buscaHectare() {
-
+        
         try {
             Conexao conn = new Conexao();
             PreparedStatement pst = null;
@@ -2025,38 +2039,38 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             pst = conn.getConexao().prepareStatement("select hectare,cultura from plantio where ordem_pro = ?");
             pst.setString(1, (String) cbOp.getSelectedItem());
             rs = pst.executeQuery();
-
+            
             while (rs.next()) {
                 hectare = rs.getFloat("hectare");
                 cultura = rs.getString("cultura");
-
+                
             }
-
+            
             conn.getConexao().close();
             pst.close();
             rs.close();
-
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao Conectar com banco!" + ex);
         }
     }
-
+    
     public void AgregarOps() {
-
+        
         int totalOp = tabelaOp.getRowCount();
         int incremente_op = 1;
-
+        
         while (totalOp >= incremente_op) {
-
+            
             opAgregada.add((String) tabelaOp.getValueAt(incremente_op - 1, 1)); //Cod Produto
 
             incremente_op++;
-
+            
         }
         ordProdAgregadas = opAgregada.toString().replaceAll(",", " - ");
-
+        
     }
-
+    
     public void salvar() {
         AgregarOps();
         Conexao conn = new Conexao();
@@ -2068,11 +2082,11 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 String op = (String) tabelaOp.getValueAt(incremente_op - 1, 1); //Cod Produto
                 incremente_op = incremente_op + 1;
                 int incremente_linda = 1;
-
+                
                 while (totalProdutos >= incremente_linda) {
                     PreparedStatement pst = conn.getConexao().prepareStatement("insert into producao(dataColheita,documento,"
                             + "codProduto,produto,und,quantidade,op,semana,CACHO)VALUES(?,?,?,?,?,?,?,?,?)");
-
+                    
                     pst.setString(1, txtData.getText());//Data
                     pst.setString(2, txtDocumento.getText()); // Documento
                     pst.setString(3, TabelaItens.getValueAt(incremente_linda - 1, 2).toString()); //Cod Produto
@@ -2088,24 +2102,24 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                     pst.execute();
                     incremente_linda++;
                     pst.close();
-
+                    
                 }
-
+                
             }
             Confirmacao conf = new Confirmacao(this, true);
             conf.setVisible(true);
             carregaTabela();
             limpaTela();
             geraNumeroProducao();
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao processr requisição " + e);
-
+            
         }
     }
-
+    
     public void limpaTela() {
-
+        
         txtDocumento.setText("");
         txtCodigo.setText("");
         txtProduto.setText("");
@@ -2113,10 +2127,10 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         geraNumeroProducao();
         cbSemana.requestFocus();
         lblTotalHectares.setText("0.0");
-
+        
         lblProducaoHa.setText("R$ 0,00");
         lblProducaoTotal.setText("R$ 0,00");
-
+        
         DefaultTableModel Tabela = (DefaultTableModel) this.TabelaItens.getModel();
         DefaultTableModel Tabela2 = (DefaultTableModel) this.tabelaOp.getModel();
         //Limpeza Tabela de Produtos
@@ -2124,22 +2138,22 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         //  JOptionPane.showMessageDialog(this, lin);
         for (int i = 1; lin >= i; i++) {
             Tabela.removeRow(0);
-
+            
         }
-
+        
         int lin2 = Tabela2.getRowCount();
         //  JOptionPane.showMessageDialog(this, lin2);
         for (int i2 = 1; lin2 >= i2; i2++) {
             Tabela2.removeRow(0);
-
+            
         }
-
+        
     }
-
+    
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
         if (txtCodigo.getText().equals("")) {
-
+            
         } else {
             buscaProduto();
         }
@@ -2164,17 +2178,17 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             txtProduto.setText(nome);
             txtUnidade.setText(und);
             txtQuantidade.requestFocus();
-
+            
         } else {
-
+            
         }
     }//GEN-LAST:event_txtCodigoKeyPressed
 
     private void btnAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProdutoActionPerformed
-
+        
         addProduto();
         somaCusto();
-
+        
 
     }//GEN-LAST:event_btnAddProdutoActionPerformed
 
@@ -2184,23 +2198,23 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
     private void btnInserirOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirOpActionPerformed
         buscaHectare();
-
+        
         addOp();
         somaHectare();
-
+        
         if (lblProducaoTotal.getText().equals("0,00")) {
-
+            
         } else {
-
+            
             DecimalFormat df = new DecimalFormat("#,##0.00");
             float totalHa = Float.parseFloat(lblTotalHectares.getText());
             float custoTotal = Float.parseFloat(lblProducaoTotal.getText().replace(".", "").replaceAll(",", "."));
             float custoHa = custoTotal / totalHa;
             String custoHaFormatado = df.format(custoHa);
             lblProducaoHa.setText(custoHaFormatado);
-
+            
         }
-
+        
 
     }//GEN-LAST:event_btnInserirOpActionPerformed
 
@@ -2239,36 +2253,36 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarMouseReleased
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-
+        
         switch (lblTituloForm.getText()) {
             case "Produção - Incluir":
                 salvar();
-
+                
                 break;
             case "Cadastro de Produto - Alterar":
-
+                
                 break;
             case "Produção - Excluir":
-
+                
                 int resp1 = JOptionPane.showConfirmDialog(null, "Confirma a exclusão da produção " + txtDocumento.getText() + "?", "AGUITECH", JOptionPane.YES_NO_OPTION);
                 if (resp1 == 0) {
                     excluirRegistro();
                     CardLayout cl = (CardLayout) painelCorpo.getLayout();
                     cl.show(painelCorpo, "CardBase");
                     limpaTela();
-
+                    
                 } else {
-
+                    
                 }
-
+                
                 break;
-
+            
         }
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txtUnidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUnidadeFocusLost
-
+        
 
     }//GEN-LAST:event_txtUnidadeFocusLost
 
@@ -2277,19 +2291,19 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         dtm.removeRow(tabelaOp.getSelectedRow());
         somaHectare();
         somaCusto();
-
+        
         if (lblProducaoHa.getText().equals("R$ 0,00") || lblTotalHectares.getText().equals("0.0")) {
             lblProducaoTotal.setText("R$ 0,00");
-
+            
         } else {
-
+            
             DecimalFormat df = new DecimalFormat("#,##0.00");
             float totalHa = Float.parseFloat(lblTotalHectares.getText());
             float custoTotal = Float.parseFloat(lblProducaoHa.getText().replace("R$", "").replace(".", "").replaceAll(",", "."));
             float custoHa = custoTotal / totalHa;
             String custoHaFormatado = df.format(custoHa);
             lblProducaoTotal.setText(custoHaFormatado);
-
+            
         }
 
     }//GEN-LAST:event_btnRemoverOpActionPerformed
@@ -2308,7 +2322,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             erro.setVisible(true);
         } else {
             carregaDadosNoArray();
-
+            
             Document documentoPDF = new Document();
             OutputStream outPutStream = null;
             documentoPDF.setMargins(15, 0, 15, 0);
@@ -2318,19 +2332,19 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
             fontPadrao.setStyle(0);
             fontPadrao.setFamily("Arial");
             fontPadrao.setColor(Color.BLACK);
-
+            
             try {
 
                 //Local onde o arquivo será salvo
                 PdfWriter.getInstance(documentoPDF, new FileOutputStream("C:\\print\\RelReq.pdf"));
-
+                
                 Image logo = Image.getInstance("C:\\Users\\edica\\Documents\\NetBeansProjects\\NOVAAGRICOLA_02\\src\\Imagens2\\logoNovaAgricola.png");
                 logo.scaleToFit(48, 48);
 
                 //Abrindo o documento
                 //  documentoPDF.newPage();
                 documentoPDF.open();
-
+                
                 documentoPDF.setPageSize(PageSize.A5);
                 documentoPDF.addTitle("AguiTech - Relatorio de Produtos");
 
@@ -2370,12 +2384,12 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
                 //Tabela / Sessao para Ordem de Producao, Data, Usuario
                 PdfPTable dadosMestres = new PdfPTable(2);
-
+                
                 PdfPCell rotuloOp = new PdfPCell(new Paragraph("Ordem de Produção:", fontPadrao));
                 PdfPCell op = new PdfPCell(new Paragraph(requisicao.get(3), fontOp));
                 PdfPCell rotuloTipoMov = new PdfPCell(new Paragraph("Tipo da Requisição:", fontPadrao));
                 PdfPCell tipomov = new PdfPCell(new Paragraph(requisicao.get(2), fontTituloTabela));
-
+                
                 rotuloOp.setBorder(PdfCell.NO_BORDER);
                 op.setBorder(PdfCell.NO_BORDER);
                 rotuloOp.setHorizontalAlignment(0);
@@ -2384,27 +2398,27 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 tipomov.setBorder(PdfCell.NO_BORDER);
                 rotuloTipoMov.setHorizontalAlignment(0);
                 tipomov.setHorizontalAlignment(0);
-
+                
                 dadosMestres.addCell(rotuloOp);
                 dadosMestres.addCell(rotuloTipoMov);
                 dadosMestres.addCell(op);
                 dadosMestres.addCell(tipomov);
-
+                
                 PdfPTable usuario_hora = new PdfPTable(2);
                 PdfPTable usuario_horaSegundaVia = new PdfPTable(2);
-
+                
                 PdfPCell rotuloUser = new PdfPCell(new Paragraph("\n" + "Impresso por:", fontPadrao));
                 PdfPCell usuario = new PdfPCell(new Paragraph(user.getUsuarioLogado() + " | " + horaAtual, fontTituloTabela));
                 PdfPCell via = new PdfPCell(new Paragraph("\n" + "1ª Via", fontPadrao));
                 PdfPCell via2 = new PdfPCell(new Paragraph("\n" + "2ª Via", fontPadrao));
                 PdfPCell destVia = new PdfPCell(new Paragraph("Almoxarifado", fontTituloTabela));
                 PdfPCell destVia2 = new PdfPCell(new Paragraph("Solicitante", fontTituloTabela));
-
+                
                 rotuloUser.setBorder(PdfCell.NO_BORDER);
                 rotuloUser.setHorizontalAlignment(0);
                 usuario.setBorder(PdfCell.NO_BORDER);
                 usuario.setHorizontalAlignment(0);
-
+                
                 via.setBorder(PdfCell.NO_BORDER);
                 via.setHorizontalAlignment(2);
                 destVia.setBorder(PdfCell.NO_BORDER);
@@ -2413,12 +2427,12 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 via2.setHorizontalAlignment(2);
                 destVia2.setBorder(PdfCell.NO_BORDER);
                 destVia2.setHorizontalAlignment(2);
-
+                
                 usuario_hora.addCell(rotuloUser);
                 usuario_hora.addCell(via);
                 usuario_hora.addCell(usuario);
                 usuario_hora.addCell(destVia);
-
+                
                 usuario_horaSegundaVia.addCell(rotuloUser);
                 usuario_horaSegundaVia.addCell(via2);
                 usuario_horaSegundaVia.addCell(usuario);
@@ -2426,18 +2440,18 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
                 //Assinaturas
                 PdfPTable assinatura = new PdfPTable(3);
-
+                
                 PdfPCell respAlmox = new PdfPCell(new Paragraph("Resp. Almoxarifado:" + "\n" + "\n"
                         + "____________________________", fontPadrao));
                 PdfPCell respGestao = new PdfPCell(new Paragraph("Gestor:" + "\n" + "\n"
                         + "____________________________", fontPadrao));
                 PdfPCell solicitante = new PdfPCell(new Paragraph("Solicitante:" + "\n" + "\n"
                         + "____________________________", fontPadrao));
-
+                
                 respAlmox.setBorderColor(Color.white);
                 solicitante.setBorderColor(Color.white);
                 respGestao.setBorderColor(Color.white);
-
+                
                 respAlmox.setHorizontalAlignment(0);
                 respGestao.setHorizontalAlignment(1);
                 solicitante.setHorizontalAlignment(2); //0 = esquerda, 1 = centro, 2 direita;
@@ -2448,12 +2462,12 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
                 // Configuração 1 via
                 titulo.setPadding(10);
-
+                
                 Doc.setPaddingTop(5);
                 Data.setPaddingTop(5);
                 Doc.setPaddingBottom(5);
                 Data.setPaddingBottom(5);
-
+                
                 titulo.setHorizontalAlignment(1);
                 Doc.setHorizontalAlignment(2);
                 Data.setHorizontalAlignment(2); //0 = esquerda, 1 = centro, 2 direita;
@@ -2463,23 +2477,23 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 empresa.setBorderColorLeft(Color.WHITE);
                 empresa.setBorderColorTop(Color.WHITE);
                 empresa.setBorderColorBottom(Color.BLACK);
-
+                
                 titulo.setBorderWidthBottom(1);
                 titulo.setBorderColorTop(Color.WHITE);
                 titulo.setBorderColorBottom(Color.BLACK);
-
+                
                 Doc.setBorderWidthBottom(1);
                 Doc.setBorderColorTop(Color.WHITE);
                 Doc.setBorderColorRight(Color.WHITE);
                 Doc.setBorderColorBottom(Color.BLACK);
-
+                
                 Data.setBorderWidthBottom(1);
                 Data.setBorderColorTop(Color.WHITE);
                 Data.setBorderColorRight(Color.WHITE);
                 Data.setBorderColorLeft(Color.WHITE);
                 Data.setBorderColorBottom(Color.BLACK);
                 empresa.setHorizontalAlignment(1);
-
+                
                 cabeca.addCell(empresa);
                 cabeca.addCell(titulo);
                 cabeca.addCell(Doc);
@@ -2489,12 +2503,12 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 //Configuração 2 via
                 empresaSegundaVia.setPadding(10);
                 tituloSegundaVia.setPadding(10);
-
+                
                 DocSegundaVia.setPaddingTop(5);
                 DataSegundaVia.setPaddingTop(5);
                 DocSegundaVia.setPaddingBottom(5);
                 DataSegundaVia.setPaddingBottom(5);
-
+                
                 empresaSegundaVia.setHorizontalAlignment(1);
                 tituloSegundaVia.setHorizontalAlignment(1);
                 DocSegundaVia.setHorizontalAlignment(2);
@@ -2504,7 +2518,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 titulo.setBorderColor(Color.black);
                 Doc.setBorderColor(Color.black);
                 Data.setBorderColor(Color.black);
-
+                
                 cabecaSegundaVia.addCell(empresa);
                 cabecaSegundaVia.addCell(titulo);
                 cabecaSegundaVia.addCell(Doc);
@@ -2513,7 +2527,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
                 //criando uma tabela
                 Paragraph linhaEmBranco = new Paragraph(" ");
-
+                
                 PdfPTable tabela = new PdfPTable(5);
 
                 //Fonte cabecalho tabela
@@ -2546,7 +2560,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 coluna3.setPadding(5);
                 coluna4.setPadding(5);
                 coluna5.setPadding(5);
-
+                
                 coluna1.setHorizontalAlignment(1);//Item
                 coluna2.setHorizontalAlignment(1);//Codigo
                 coluna3.setHorizontalAlignment(0);//Descrição
@@ -2560,72 +2574,72 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 tabela.addCell(coluna3);
                 tabela.addCell(coluna4);
                 tabela.addCell(coluna5);
-
+                
                 int increment = 1;
                 int indice = 0;
-
+                
                 int totalProduto = requisicao.size();
-
+                
                 while (indice <= totalProduto - 8) {
-
+                    
                     PdfPCell item = new PdfPCell(new Paragraph(("Item " + increment), fontDadosTabelaProdutos));
                     PdfPCell codigo = new PdfPCell(new Paragraph(requisicao.get(indice + 4), fontDadosTabelaProdutos));
                     PdfPCell nome = new PdfPCell(new Paragraph((" " + requisicao.get(indice + 5)), fontDadosTabelaProdutos));
                     PdfPCell und = new PdfPCell(new Paragraph((requisicao.get(indice + 6)), fontDadosTabelaProdutos));
                     PdfPCell quantidade = new PdfPCell(new Paragraph(requisicao.get(indice + 7), fontDadosTabelaProdutos));
-
+                    
                     item.setPadding(3);
                     item.setHorizontalAlignment(1);
                     codigo.setHorizontalAlignment(1);
                     und.setHorizontalAlignment(1);
                     quantidade.setHorizontalAlignment(2);
-
+                    
                     if (increment % 2 == 0) {
-
+                        
                         item.setBackgroundColor(new java.awt.Color(217, 211, 211));//217,211,211)
                         codigo.setBackgroundColor(new java.awt.Color(217, 211, 211));
                         nome.setBackgroundColor(new java.awt.Color(217, 211, 211));
                         und.setBackgroundColor(new java.awt.Color(217, 211, 211));
                         quantidade.setBackgroundColor(new java.awt.Color(217, 211, 211));
-
+                        
                         tabela.addCell(item);
                         tabela.addCell(codigo);
                         tabela.addCell(nome);
                         tabela.addCell(und);
                         tabela.addCell(quantidade);
-
+                        
                     } else {
-
+                        
                         item.setBackgroundColor(new java.awt.Color(255, 255, 255));
                         codigo.setBackgroundColor(new java.awt.Color(255, 255, 255));
                         nome.setBackgroundColor(new java.awt.Color(255, 255, 255));
                         und.setBackgroundColor(new java.awt.Color(255, 255, 255));
                         quantidade.setBackgroundColor(new java.awt.Color(255, 255, 255));
-
+                        
                         tabela.addCell(item);
                         tabela.addCell(codigo);
                         tabela.addCell(nome);
                         tabela.addCell(und);
                         tabela.addCell(quantidade);
-
+                        
                     }
-
+                    
                     indice = indice + 8;
                     increment++;
                 }
-
+                
                 if (increment < 15) {
                     int linBranco = 1;
-
+                    
                     while (increment - 1 + linBranco <= 14) {
-
+                        
                         while (linBranco == 1) {
                             PdfPCell itemBranco = new PdfPCell(new Paragraph(" ", fontTitulosColunaTbProdutos));
                             itemBranco.setBorderColorTop(Color.black);
                             itemBranco.setBorderWidthBottom(0);
                             itemBranco.setBorderWidthRight(0);
                             itemBranco.setBorderWidthLeft(0);
-
+                            
                             tabela.addCell(itemBranco);
                             tabela.addCell(itemBranco);
                             tabela.addCell(itemBranco);
@@ -2633,18 +2647,18 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                             tabela.addCell(itemBranco);
                             linBranco++;
                         }
-
+                        
                         PdfPCell itemBranco = new PdfPCell(new Paragraph(" ", fontTitulosColunaTbProdutos));
                         itemBranco.setBorderColor(Color.WHITE);
-
+                        
                         tabela.addCell(itemBranco);
                         tabela.addCell(itemBranco);
                         tabela.addCell(itemBranco);
                         tabela.addCell(itemBranco);
                         tabela.addCell(itemBranco);
-
+                        
                         linBranco++;
-
+                        
                     }
                 }
 
@@ -2688,14 +2702,14 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 //Abrir o PDF no padrão do arquivo.
                 Desktop desktop = Desktop.getDesktop();
                 desktop.open(new File("C:\\print\\RelReq.pdf"));
-
+                
             } catch (FileNotFoundException ex) {
                 JOptionPane.showConfirmDialog(this, "Documento não entradao " + ex);
             } catch (DocumentException ex) {
                 JOptionPane.showConfirmDialog(this, "Err " + ex);
             } catch (IOException ex) {
                 JOptionPane.showConfirmDialog(this, "Erro " + ex);
-
+                
             } finally {
                 documentoPDF.close();
             }
@@ -2724,7 +2738,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-
+        
         txtCodigo.setText("");
         ConsultaProduto2 consulta = new ConsultaProduto2(new javax.swing.JFrame(), true);
         consulta.setVisible(true);
@@ -2734,10 +2748,10 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
         String und = consulta.getUnidade();
         float estoqueAtual = consulta.getEstoque();
         float valorAtual = consulta.getValor();
-
+        
         txtCodigo.setText(codigo);
         txtProduto.setText(nome);
-
+        
         estoque = estoqueAtual;
         valor = valorAtual;
         custoM = valor / estoque;
@@ -2770,7 +2784,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
     private void txtQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantidadeFocusLost
         if (txtQuantidade.getText().equals("")) {
-
+            
         } else {
             DecimalFormat df = new DecimalFormat("#,##0.0000");
             float quantidade = Float.parseFloat(txtQuantidade.getText().replace(".", "").replaceAll(",", "."));
@@ -2786,7 +2800,7 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
 
     private void txtCachoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCachoFocusLost
         if (txtCacho.getText().equals("")) {
-
+            
         } else {
             DecimalFormat df = new DecimalFormat("#,##0.0000");
             float quantidade = Float.parseFloat(txtCacho.getText().replace(".", "").replaceAll(",", "."));
@@ -2798,6 +2812,19 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
     private void txtCachoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCachoActionPerformed
         btnAddProduto.requestFocus();        // TODO add your handling code here:
     }//GEN-LAST:event_txtCachoActionPerformed
+
+    private void tabelaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaKeyReleased
+        JD_FATO_PROD fato = new JD_FATO_PROD(this, true);
+        int tecla = evt.getKeyCode();
+        if (tecla == 115) {
+            int linha = tabela.getSelectedRow();
+            int codCaixa = Integer.parseInt(tabela.getValueAt(linha, 3).toString());
+            fato.setVisible(true);
+            
+        } else {
+            
+        }
+    }//GEN-LAST:event_tabelaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -2813,21 +2840,21 @@ public class BASE_PRODUCAO extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(BASE_PRODUCAO.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(BASE_PRODUCAO.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(BASE_PRODUCAO.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(BASE_PRODUCAO.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
