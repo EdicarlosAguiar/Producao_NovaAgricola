@@ -44,9 +44,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         initComponents();
         configIniciais();
         txtCodigo.requestFocus();
-        txtSaldoAnterior.setText("0,00");
-        txtValorAnterior.setText("0,00");
-        txtCustoMedio.setText("0,00");
+    
 
     }
 
@@ -88,17 +86,15 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                     centro.setHorizontalAlignment(SwingConstants.CENTER);
 
                     tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(2).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(3).setCellRenderer(esquerda);
+                    tabela.getColumnModel().getColumn(2).setCellRenderer(direita);
+                    tabela.getColumnModel().getColumn(3).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(4).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(5).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(6).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(7).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(8).setCellRenderer(direita);
+                    tabela.getColumnModel().getColumn(7).setCellRenderer(centro);
+                    tabela.getColumnModel().getColumn(8).setCellRenderer(centro);
                     tabela.getColumnModel().getColumn(9).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(10).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(11).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(12).setCellRenderer(esquerda);
 
                     direita.setBackground(c);
                     esquerda.setBackground(c);
@@ -118,17 +114,15 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                     centro.setHorizontalAlignment(SwingConstants.CENTER);
 
                     tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(2).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(3).setCellRenderer(esquerda);
+                    tabela.getColumnModel().getColumn(2).setCellRenderer(direita);
+                    tabela.getColumnModel().getColumn(3).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(4).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(5).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(6).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(7).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(8).setCellRenderer(direita);
+                    tabela.getColumnModel().getColumn(7).setCellRenderer(centro);
+                    tabela.getColumnModel().getColumn(8).setCellRenderer(centro);
                     tabela.getColumnModel().getColumn(9).setCellRenderer(direita);
                     tabela.getColumnModel().getColumn(10).setCellRenderer(direita);
-                    tabela.getColumnModel().getColumn(11).setCellRenderer(esquerda);
-                    tabela.getColumnModel().getColumn(12).setCellRenderer(esquerda);
 
                     direita.setBackground(c);
                     esquerda.setBackground(c);
@@ -172,39 +166,11 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                 String saldoAnteriorFormatado = df.format(entradas);
                 /* String saldoValorFormatado = df.format(saldoValor);*/
 
-                txtSaldoAnterior.setText(saldoAnteriorFormatado);
-                /*   txtValorAnterior.setText(saldoValorFormatado);*/
+               
 
             }
             conn.getConexao().close();
         } catch (Exception e) {
-        }
-    }
-
-    public void carregaCalendario() {
-
-        Conexao conn2 = new Conexao();
-        PreparedStatement pst2 = null;
-        ResultSet rs2;
-        try {
-            pst2 = conn2.getConexao().prepareStatement("select * from calendario");
-            rs2 = pst2.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-
-            modelo.setNumRows(0);
-            while (rs2.next()) {
-
-                {
-                    modelo.addRow(new Object[]{
-                        tabela.getRowCount(),
-                        rs2.getString("data"),});//Status
-
-                }
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(JD_MOV_ESTOQUE.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -224,7 +190,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         String dataInteiroIn = anoIn + mesIn + diaIn;
         String dataInteiroFim = anoFim + mesFim + diaFim;
 
-        //   JOptionPane.showMessageDialog(null, dataInteiroIn+ " | "+dataInteiroFim);
+        //  JOptionPane.showMessageDialog(null, dataInteiroIn + " | " + dataInteiroFim);
         try {
 
             Conexao conn = new Conexao();
@@ -232,48 +198,65 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             ResultSet rs;
             DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
             modelo.setRowCount(0);
-            pst = conn.getConexao().prepareStatement("select * from kardex where codProduto =? "
-                    + "and data_do_movimento >=? and data_do_movimento <=?");
+            pst = conn.getConexao().prepareStatement("SELECT data2 as Data, qFim as Entrada_Q, vFim as Entrada_V, vFim/qFim as CM,"
+                    + "qFim-qFim as Saida_Q,vFim-vFim as Saida_V,data_base as Doc, 'A - EST_INI' as Mov from fechamento_estoque where codProduto=? and data2='20230131'group by codProduto,Data,Mov union SELECT "
+                    + "data2 as Data, quantidade-quantidade as Entrada_Q,quantidade-quantidade as Entrada_V, custo/quantidade as CM,"
+                    + "sum(quantidade) as Saida_Q,sum(custo) as Saida_V, documento as Doc, 'D - REQ_PD' as Mov from requisicao where codProd=? and tipoMov =? and data2 >= '20230131' group by codProd,Data,tipoMov,documento union SELECT "
+                    + "data2 as Data, quantidade as Entrada_Q,custo as Entrada_V, custo/quantidade as CM,"
+                    + "quantidade-quantidade as Saida_Q,quantidade-quantidade as Saida_V, documento as Doc, 'C - DEV_REQ' as Mov from requisicao where codProd =? and tipoMov =? and data2 >= '20230131' group by codProd,Data,tipoMov,documento union SELECT "
+                    + "dataReferencia as Data, qtdeFloat as Entrada_Q, totalFloat as Entrada_V,totalFloat/qtdeFloat as CM,"
+                    + "qtdeFloat-qtdeFloat as Saida_Q, qtdeFloat-qtdeFloat as Entrada_V,documento as Doc,'B - COMPRA' as Mov from compra where codProduto=? and at_estoque =? and dataReferencia >= '20230131'"
+                    + "group by codProduto,Data,Doc order by Data,Mov,Doc");
 
             String parametro1 = txtCodigo.getText();
-            String parametro2 = dataInteiroIn;
-            String parametro3 = dataInteiroFim;
+            // 
+            //String parametro2 = dataInteiroIn;
+            //  String parametro3 = dataInteiroFim;
 
             pst.setString(1, parametro1);
-            pst.setString(2, parametro2);
-            pst.setString(3, parametro3);
+            pst.setString(2, parametro1);
+            pst.setString(3, "01 - REQUISIÇÃO PADRÃO");
+            pst.setString(4, parametro1);
+            pst.setString(5, "50 - DEVOLUÇÃO AO ALMOXARIFADO");
+            pst.setString(6, parametro1);
+            pst.setString(7, "SIM");
 
+            //  pst.setString(3, parametro3);
             rs = pst.executeQuery();
-
+            double saldo = 0;
             while (rs.next()) {
 
-                double entradas = rs.getDouble(7);
-                double saidas = rs.getDouble(9);
-                double entradasValor = rs.getDouble(8);
-                double saidasValor = rs.getDouble(10);
-                double custoMedio = entradasValor / entradas;
+                double entrada = rs.getDouble("Entrada_Q");
+                double saida = rs.getDouble("Saida_Q");
+                double entradaValor = rs.getDouble("Entrada_V");
+                double saidaValor = rs.getDouble("Saida_V");
+                double custoMedio = rs.getDouble("CM");
+                saldo += entrada - saida;
 
-                DecimalFormat df = new DecimalFormat("#,###0.00");
-                String entradasFormatado = df.format(entradas);
-                String saidasFormatado = df.format(saidas);
-                String entradaValorFormatado = df.format(entradasValor);
-                String saidaValorFormatado = df.format(saidasValor);
+                DecimalFormat df = new DecimalFormat("#,##0.00");
+                String entradaFormatado_Q = df.format(entrada);
+                String saidaFormatado_Q = df.format(saida);
+                String entradaFormatado_V = df.format(entradaValor);
+                String saidaFormatado_V = df.format(saidaValor);
                 String custoMedioFortado = df.format(custoMedio);
+                String saldoFormatado_Q = df.format(saldo);
+                //Formatar a data
+                String ano = rs.getString("Data").substring(0, 4);
+                String mes = rs.getString("Data").substring(4, 6);
+                String dia = rs.getString("Data").substring(6, 8);
+                String data = dia + "/" + mes + "/" + ano;
 
                 modelo.addRow(new Object[]{
                     tabela.getRowCount() + 1,
-                    rs.getString(2),//Data
-                    rs.getString(4),//Codigo
-                    rs.getString(5),//Produto
-                    entradasFormatado,//Entrada Quantidade
-                    entradaValorFormatado,//Entrada Valor
-                    "",//Custo Medio
-                    saidasFormatado,//Saida Quantidade
-                    "",//Saida Valor
-                    "",//Saldo Quantidade
-                    "",//Saldo Valor
-                    rs.getString(15),//Doc Origem
-                    rs.getString(16),//Tipo Mov
+                    data,//Data
+                    entradaFormatado_Q,//Entradas em quantidade
+                    entradaFormatado_V,//Entradas em Valor
+                    custoMedioFortado,//Custo médio da movimentação
+                    saidaFormatado_Q,//Saida em Quantidade
+                    saidaFormatado_V,//Ssida em valor
+                    rs.getString("Doc"),//Documento
+                    rs.getString("Mov"),//Tipo movimentação
+                    saldoFormatado_Q,//SAldo em quantidade
                 }
                 );
 
@@ -282,47 +265,14 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             conn.getConexao().close();
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(new javax.swing.JFrame(), "Erro ao gerar kardex " + e);
         }
 
-        somaTabela();
-        calculaSaldo();
-
+        //    somaTabela();
+        //    calculaSaldo();
     }
 
-    public void calculaSaldo() {
 
-        int linha = tabela.getRowCount();
-        int linIndice = 1;
-        int linhaCount = 1;
-        double saldoAnterior = Double.parseDouble(txtSaldoAnterior.getText().replace(".", "").replaceAll(",", "."));
-
-        while (linha >= linhaCount) {
-
-            double entradas = Double.parseDouble(tabela.getValueAt(linIndice - 1, 4).toString().replace(".", "").replaceAll(",", "."));
-            double saidas = Double.parseDouble(tabela.getValueAt(linIndice - 1, 7).toString().replace(".", "").replaceAll(",", "."));
-            saldoAtual = saldoAnterior + entradas - saidas;
-
-            double saidaValor = saidas * custoMedioMacro;
-            double saldoValor = saldoAtual * custoMedioMacro;
-
-            DecimalFormat df = new DecimalFormat("#,###0.00");
-
-            String saldoFormatado = df.format(saldoAtual);
-            String custoMedioFormatado = df.format(custoMedioMacro);
-            String saidaValorFormatado = df.format(saidaValor);
-            String saldoValorFormatado = df.format(saldoValor);
-
-            tabela.setValueAt(custoMedioFormatado, linIndice - 1, 6);//Custo Medio
-            tabela.setValueAt(saidaValorFormatado, linIndice - 1, 8);//Saida Valor
-            tabela.setValueAt(saldoFormatado, linIndice - 1, 9); //Saldo Quantidade
-            tabela.setValueAt(saldoValorFormatado, linIndice - 1, 10);//Saldo Valor
-
-            saldoAnterior = saldoAtual;
-            linIndice = linIndice + 1;
-            linhaCount = linhaCount + 1;
-        }
-
-    }
 
     public void somaTabela() {
 
@@ -331,18 +281,18 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         double totalSaidas = 0;
 
         for (int i = 0; i < tabela.getRowCount(); i++) {
-            totalEntradas += Double.parseDouble(tabela.getValueAt(i, 4).toString().toString().replace(".", "").replaceAll(",", "."));
-            totalSaidas += Double.parseDouble(tabela.getValueAt(i, 7).toString().toString().replace(".", "").replaceAll(",", "."));
-            valorEntradas += Double.parseDouble(tabela.getValueAt(i, 5).toString().toString().replace(".", "").replaceAll(",", "."));
+            totalEntradas += Double.parseDouble(tabela.getValueAt(i, 2).toString().toString().replace(".", "").replaceAll(",", "."));
+            totalSaidas += Double.parseDouble(tabela.getValueAt(i, 5).toString().toString().replace(".", "").replaceAll(",", "."));
+          
 
         }
 
-        valorEntradas = valorEntradas + Double.parseDouble(txtValorAnterior.getText().replace(".", " ").replaceAll(",", "."));
-        double entradaTotais = totalEntradas + Double.parseDouble(txtSaldoAnterior.getText().replace(".", " ").replaceAll(",", "."));
-        double saldoAnterior = Double.parseDouble(txtSaldoAnterior.getText().replace(".", " ").replaceAll(",", "."));
-        double saldo = totalEntradas + saldoAnterior - totalSaidas;
+      
+       
+        
+        double saldo = totalEntradas - totalSaidas;
 
-        custoMedioMacro = valorEntradas / entradaTotais;
+     
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
         String entradasFormatado = df.format(totalEntradas);
@@ -353,7 +303,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         txtTotalEntradas.setText(entradasFormatado);
         txtTotalSaidas.setText(saidasFormatado);
         txtSaldoAtual.setText(saldoFormatado);
-        txtCustoMedio.setText(custoMedioFormatado);
+      //  txtCustoMedio.setText(custoMedioFormatado);
     }
 
     public void pegaCodigo(ModelProduto mod) {
@@ -373,7 +323,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                txtNome.setText(rs.getString("nome"));
+                txtNome.setText("  "+rs.getString("nome"));
                 txtDataInicio.requestFocus();
 
             }
@@ -416,24 +366,19 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        txtSaldoAnterior = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtCustoMedio = new javax.swing.JTextField();
-        txtValorAnterior = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 3, true));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Parametros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 51, 102))); // NOI18N
 
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/18x18/View.png"))); // NOI18N
         btnConsulta.setText("Gerar Consulta");
         btnConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,6 +388,9 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
 
         jLabel2.setText("Codigo:");
 
+        txtCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodigo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodigoFocusLost(evt);
@@ -459,15 +407,23 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             }
         });
 
+        txtNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(51, 51, 51));
+        txtNome.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtNome.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtNome.setEnabled(false);
 
+        txtDataInicio.setForeground(new java.awt.Color(51, 51, 51));
         try {
             txtDataInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txtDataInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDataInicio.setText("31/01/2023    ");
+        txtDataInicio.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        txtDataInicio.setEnabled(false);
+        txtDataInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtDataInicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtDataInicioFocusLost(evt);
@@ -479,12 +435,15 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             }
         });
 
+        txtDataFim.setForeground(new java.awt.Color(51, 51, 51));
         try {
             txtDataFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txtDataFim.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDataFim.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        txtDataFim.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtDataFim.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtDataFimFocusLost(evt);
@@ -518,23 +477,20 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDataInicio)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(txtDataFim))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnConsulta)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(271, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnConsulta)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -544,11 +500,12 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -563,24 +520,30 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Saldo Atual(=):");
 
-        txtTotalSaidas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalSaidas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTotalSaidas.setForeground(new java.awt.Color(51, 51, 51));
         txtTotalSaidas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTotalSaidas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtTotalSaidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalSaidasActionPerformed(evt);
             }
         });
 
-        txtTotalEntradas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotalEntradas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTotalEntradas.setForeground(new java.awt.Color(51, 51, 51));
         txtTotalEntradas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTotalEntradas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtTotalEntradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalEntradasActionPerformed(evt);
             }
         });
 
-        txtSaldoAtual.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtSaldoAtual.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtSaldoAtual.setForeground(new java.awt.Color(51, 51, 51));
         txtSaldoAtual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSaldoAtual.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtSaldoAtual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSaldoAtualActionPerformed(evt);
@@ -594,17 +557,17 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTotalEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtTotalEntradas)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTotalSaidas, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtTotalSaidas)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSaldoAtual, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(233, Short.MAX_VALUE))
+                    .addComponent(txtSaldoAtual)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -616,24 +579,24 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTotalSaidas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotalEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTotalSaidas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalEntradas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(94, 110, 110));
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText(" Analise das Movimentações de Estoque");
+        jLabel1.setText("Kardex - Movimentações do produto");
 
         btnCancelar.setBackground(new java.awt.Color(94, 110, 110));
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(204, 204, 204));
         btnCancelar.setText("X");
         btnCancelar.setAlignmentY(0.8F);
-        btnCancelar.setBorder(null);
+        btnCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btnCancelar.setContentAreaFilled(false);
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.setMargin(new java.awt.Insets(8, 5, 8, 5));
@@ -662,75 +625,14 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "Saldo Anterior a data da consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 51, 102))); // NOI18N
-
-        jLabel6.setText("Saldo Anteior:");
-
-        txtSaldoAnterior.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtSaldoAnterior.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-
-        jLabel10.setText("Custo Medio");
-
-        txtCustoMedio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtCustoMedio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-
-        txtValorAnterior.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtValorAnterior.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-
-        jLabel11.setText("Saldo Valor");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtSaldoAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCustoMedio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(0, 41, Short.MAX_VALUE))
-                    .addComponent(txtValorAnterior))
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCustoMedio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSaldoAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         tabela.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -739,7 +641,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Indice", "Data", "Codigo", "Produto", "Q_Entrada", "V_Entrada", "CM", "Q_Saida", "V_Saida", "Q_Saldo", "V_Saldo", "Doc", "TM"
+                "Indice", "Data", "Q_Entrada", "V_Entrada", "CM", "Q_Saida", "V_Saida", "Doc", "TM", "Q_Saldo", "V_Saldo"
             }
         ));
         tabela.setFillsViewportHeight(true);
@@ -750,15 +652,6 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
             tabela.getColumnModel().getColumn(0).setMinWidth(1);
             tabela.getColumnModel().getColumn(0).setPreferredWidth(1);
             tabela.getColumnModel().getColumn(0).setMaxWidth(1);
-            tabela.getColumnModel().getColumn(1).setMinWidth(100);
-            tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tabela.getColumnModel().getColumn(1).setMaxWidth(100);
-            tabela.getColumnModel().getColumn(2).setMinWidth(0);
-            tabela.getColumnModel().getColumn(2).setPreferredWidth(0);
-            tabela.getColumnModel().getColumn(2).setMaxWidth(0);
-            tabela.getColumnModel().getColumn(3).setMinWidth(0);
-            tabela.getColumnModel().getColumn(3).setPreferredWidth(0);
-            tabela.getColumnModel().getColumn(3).setMaxWidth(0);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -770,11 +663,8 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -783,13 +673,11 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -800,7 +688,9 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -809,10 +699,11 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         saldoAnterior();
-        carregaCalendario();
+        ///  carregaCalendario();
         tabela.setVisible(true);
-        //  consultaMov();
-        //  CorLinhaTabela();
+        consultaMov();
+        somaTabela();
+        CorLinhaTabela();
 
     }//GEN-LAST:event_btnConsultaActionPerformed
 
@@ -839,7 +730,7 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDataInicioActionPerformed
 
     private void txtDataFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataFimActionPerformed
-        btnConsulta.requestFocus();        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtDataFimActionPerformed
 
     private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
@@ -853,16 +744,19 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoKeyReleased
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
-        buscaProduto();
-        txtDataInicio.requestFocus();// TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoFocusLost
+        if (txtCodigo.getText().equals("")) {
 
+        } else {
+            buscaProduto();
+            txtDataInicio.requestFocus();// TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoFocusLost
+    }
     private void txtDataInicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataInicioFocusLost
         txtDataFim.requestFocus();        // TODO add your handling code here:
     }//GEN-LAST:event_txtDataInicioFocusLost
 
     private void txtDataFimFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataFimFocusLost
-        btnConsulta.requestFocus();
+
 // TODO add your handling code here:
     }//GEN-LAST:event_txtDataFimFocusLost
 
@@ -932,13 +826,10 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsulta;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -946,18 +837,14 @@ public class JD_MOV_ESTOQUE extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCustoMedio;
     private javax.swing.JFormattedTextField txtDataFim;
     private javax.swing.JFormattedTextField txtDataInicio;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSaldoAnterior;
     private javax.swing.JTextField txtSaldoAtual;
     private javax.swing.JTextField txtTotalEntradas;
     private javax.swing.JTextField txtTotalSaidas;
-    private javax.swing.JTextField txtValorAnterior;
     // End of variables declaration//GEN-END:variables
 }

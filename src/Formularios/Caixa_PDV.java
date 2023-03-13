@@ -340,9 +340,6 @@ public class Caixa_PDV extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
         ckOcultarExibir = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -359,6 +356,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 3, true));
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -385,10 +383,6 @@ public class Caixa_PDV extends javax.swing.JDialog {
             tabela.getColumnModel().getColumn(7).setMaxWidth(3);
         }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data", "Caixa" }));
-
-        jButton3.setText("Buscar");
-
         ckOcultarExibir.setText("Exibir/Ocultar");
         ckOcultarExibir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -405,14 +399,14 @@ public class Caixa_PDV extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Financeiro - Caixa do ponto de venda - PDV");
+        jLabel1.setText("Gerenciamento do CAIXA  PDV");
 
         btnFechar.setBackground(new java.awt.Color(94, 110, 110));
         btnFechar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnFechar.setForeground(new java.awt.Color(204, 204, 204));
         btnFechar.setText("X");
         btnFechar.setAlignmentY(0.8F);
-        btnFechar.setBorder(null);
+        btnFechar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         btnFechar.setContentAreaFilled(false);
         btnFechar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFechar.setMargin(new java.awt.Insets(8, 5, 8, 5));
@@ -441,7 +435,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -459,7 +453,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
         btnAbrirCaixa.setBackground(new java.awt.Color(0, 153, 153));
         btnAbrirCaixa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAbrirCaixa.setForeground(new java.awt.Color(255, 255, 255));
-        btnAbrirCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/AbrirCaixa.png"))); // NOI18N
+        btnAbrirCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/24x24/Upload.png"))); // NOI18N
         btnAbrirCaixa.setText("Abir Caixa");
         btnAbrirCaixa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         btnAbrirCaixa.setContentAreaFilled(false);
@@ -495,7 +489,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
         });
         jPanel2.add(btnAbrirCaixa);
 
-        btnSangria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/SAngria.png"))); // NOI18N
+        btnSangria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/24x24/Load.png"))); // NOI18N
         btnSangria.setText("Sangria");
         btnSangria.setAlignmentY(0.8F);
         btnSangria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
@@ -526,7 +520,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
         });
         jPanel2.add(btnSangria);
 
-        btnEncerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/FecharCaixa.png"))); // NOI18N
+        btnEncerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/24x24/Forbidden.png"))); // NOI18N
         btnEncerrar.setText("Encerrar");
         btnEncerrar.setAlignmentY(0.8F);
         btnEncerrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
@@ -620,19 +614,15 @@ public class Caixa_PDV extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addComponent(ckOcultarExibir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
+                        .addComponent(ckOcultarExibir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -643,14 +633,10 @@ public class Caixa_PDV extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)
-                        .addComponent(ckOcultarExibir)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                    .addComponent(ckOcultarExibir, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -661,7 +647,7 @@ public class Caixa_PDV extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -889,15 +875,12 @@ public class Caixa_PDV extends javax.swing.JDialog {
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnSangria;
     private javax.swing.JRadioButton ckOcultarExibir;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

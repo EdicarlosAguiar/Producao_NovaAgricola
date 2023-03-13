@@ -5,6 +5,7 @@
 package Formularios;
 
 import ARRAY_STATIC.ArrayProdutos;
+import FormulariosConsultas.ConsultaProduto;
 import Model.ModelOperacaoCaixaPDV;
 import Model.ModelUsuario;
 import java.awt.Color;
@@ -51,8 +52,8 @@ public class JF_MENU extends javax.swing.JFrame {
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy" + " - " + "HH:mm:ss");
-        lblDatahora.setText(" " + user.getUsuarioLogado() + " - " + nivelUser + " | " + util.getDataBase()+" | "+"Ult. Fech: "+
-                util.getUltimoFechamento());
+        lblDatahora.setText(" " + user.getUsuarioLogado() + " - " + nivelUser + " | " + util.getDataBase() + " | " + "Ult. Fech: "
+                + util.getUltimoFechamento());
 
         menuPermissoes.setEnabled(false);
 
@@ -140,6 +141,7 @@ public class JF_MENU extends javax.swing.JFrame {
         btnProduto = new javax.swing.JButton();
         btnCompra = new javax.swing.JButton();
         btnvenda = new javax.swing.JButton();
+        btnProducao1 = new javax.swing.JButton();
         btnContaPagar = new javax.swing.JButton();
         btnContaReceber = new javax.swing.JButton();
         btnPlantio = new javax.swing.JButton();
@@ -302,12 +304,37 @@ public class JF_MENU extends javax.swing.JFrame {
         btnvenda.setInheritsPopupMenu(true);
         btnvenda.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnvenda.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnvenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnvendaMouseClicked(evt);
+            }
+        });
         btnvenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnvendaActionPerformed(evt);
             }
         });
         jPanel2.add(btnvenda);
+
+        btnProducao1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/24x24/Table.png"))); // NOI18N
+        btnProducao1.setText("PDV");
+        btnProducao1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProducao1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnProducao1.setIconTextGap(1);
+        btnProducao1.setInheritsPopupMenu(true);
+        btnProducao1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnProducao1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnProducao1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProducao1MouseClicked(evt);
+            }
+        });
+        btnProducao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProducao1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnProducao1);
 
         btnContaPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/24x24/Next.png"))); // NOI18N
         btnContaPagar.setText("C. Pagar");
@@ -393,7 +420,7 @@ public class JF_MENU extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDatahora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1092,6 +1119,34 @@ public class JF_MENU extends javax.swing.JFrame {
         compra.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCompraActionPerformed
+
+    private void btnProducao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProducao1ActionPerformed
+        PDV pdv = new PDV();
+             ConsultaProduto prod = new ConsultaProduto(this, true);
+        prod.carregaArrayProdutos();
+        pdv.carregaArrayList();
+        pdv.carregaComboVendedor();
+
+        pdv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnProducao1ActionPerformed
+
+    private void btnvendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnvendaMouseClicked
+        BROWSER_VENDAS vendas = new BROWSER_VENDAS();
+        vendas.carregaTabela();
+        vendas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnvendaMouseClicked
+
+    private void btnProducao1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProducao1MouseClicked
+        PDV pdv = new PDV();
+         ConsultaProduto prod = new ConsultaProduto(this, true);
+        prod.carregaArrayProdutos();
+        pdv.carregaArrayList();
+        pdv.carregaComboVendedor();
+        pdv.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnProducao1MouseClicked
     public void centerWindow(Component frame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();
@@ -1122,6 +1177,7 @@ public class JF_MENU extends javax.swing.JFrame {
     private javax.swing.JButton btnContaReceber;
     private javax.swing.JButton btnPlantio;
     private javax.swing.JButton btnProducao;
+    private javax.swing.JButton btnProducao1;
     private javax.swing.JButton btnProduto;
     private javax.swing.JButton btnReiniciar;
     private javax.swing.JButton btnRequisicao;

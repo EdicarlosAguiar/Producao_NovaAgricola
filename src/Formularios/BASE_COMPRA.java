@@ -154,7 +154,7 @@ public class BASE_COMPRA extends javax.swing.JFrame {
         tabela.getTableHeader().setOpaque(false);
         tabela.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
-        tabela.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 10));
+        tabela.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, cor.getSizeFonteHenderTable()));
 
         tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value,

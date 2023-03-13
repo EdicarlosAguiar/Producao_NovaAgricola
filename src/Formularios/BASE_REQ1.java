@@ -513,7 +513,7 @@ public class BASE_REQ1 extends javax.swing.JFrame {
         tabela.getTableHeader().setOpaque(false);
         tabela.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
-        tabela.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, 10));
+        tabela.getTableHeader().setFont(new java.awt.Font("Tahoma", Font.BOLD, cor.getSizeFonteHenderTable()));
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
 
@@ -2182,9 +2182,9 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                     //Calculo do rateio
                     float quantidade = Float.parseFloat(TabelaItens.getValueAt(incremente_linda - 1, 5).toString().replace(".", "").replaceAll(",", ".")); //Qauntidade
                     float he = Float.parseFloat(tabelaOp.getValueAt(incremente_op - 1, 2).toString()); //Hectare da OP
-                    float custo = Float.parseFloat(TabelaItens.getValueAt(incremente_linda - 1, 6).toString().replace(".", "").replaceAll(",", ".")); //Qauntidade; //Custo
-                    float quantidadeRateio = (quantidade / totalHectare)* he;
-                    float custoRateio = (custo / totalHectare)* he;
+                    float custo = Float.parseFloat(TabelaItens.getValueAt(incremente_linda - 1, 6).toString().replace(".", "").replaceAll(",", "."));//Custo
+                    float quantidadeRateio = (quantidade / totalHectare) * he;
+                    float custoRateio = (custo / totalHectare) * he;
 
                     pst.setFloat(7, quantidadeRateio);
                     pst.setString(8, (String) tabelaOp.getValueAt(incremente_op - 1, 1)); //Estagio
@@ -2204,11 +2204,15 @@ public class BASE_REQ1 extends javax.swing.JFrame {
 
                 incremente_op++;
             }
+            Confirmacao conf = new Confirmacao(this, true);
+            conf.setVisible(true);
 
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(null, "Erro ao processar baixa com OP. " + e);
         }
+        carregaTabela();
+        limpaTela();
 
     }
 
@@ -2270,10 +2274,14 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                 pst.close();
 
             }
+            Confirmacao conf = new Confirmacao(this, true);
+            conf.setVisible(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao processar baixa sem OP. " + e);
         }
+        carregaTabela();
+        limpaTela();
     }
 
     public void atualizaEstoque() {
@@ -2281,7 +2289,7 @@ public class BASE_REQ1 extends javax.swing.JFrame {
         int totalProdutos = TabelaItens.getRowCount();
         int increment = 1;
         try {
-            salvar();
+
             while (totalProdutos >= increment) {
 
                 Conexao conn = new Conexao();
@@ -2299,14 +2307,10 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                 pst.close();
             }
 
-            Confirmacao conf = new Confirmacao(this, true);
-            conf.setVisible(true);
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao atualizar estoque! " + e, "Atualização de Estoque", JOptionPane.ERROR_MESSAGE);
         }
-        carregaTabela();
-        limpaTela();
+
     }
 
     public void atualizaEstoqueEntrada() {
@@ -2314,7 +2318,7 @@ public class BASE_REQ1 extends javax.swing.JFrame {
         int totalProdutos = TabelaItens.getRowCount();
         int increment = 1;
         try {
-                 salvar();
+
             while (totalProdutos >= increment) {
 
                 Conexao conn = new Conexao();
@@ -2331,13 +2335,11 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                 increment++;
                 pst.close();
             }
-            // Confirmacao conf = new Confirmacao(this, true);
-            //   conf.setVisible(true);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao atualizar estoque! " + e, "Atualização de Estoque", JOptionPane.ERROR_MESSAGE);
         }
-        carregaTabela();
-        limpaTela();
+
     }
 
     public void calculaCustoHectare() {
@@ -2534,18 +2536,20 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                 case "Requisição de materiais - Incluir":
 
                     if (totalOP < 1) {
-                      
+
                         if (cbTipoMov.getSelectedItem().equals("01 - REQUISIÇÃO PADRÃO")
                                 || cbTipoMov.getSelectedItem().equals("02 - REQUISIÇÃO AJUSTE SAIDA")
                                 || cbTipoMov.getSelectedItem().equals("03 - AJUSTE DE ESTOQUE (SAIDA)")
                                 || cbTipoMov.getSelectedItem().equals("04 - AJUSTE DE INVENTARIO (SAIDA)")) {
-
                             atualizaEstoque();
+                            salvarSemOP();
+
                         } else {
                             atualizaEstoqueEntrada();
+                            salvarSemOP();
+
                         }
                     } else {
-                  
 
                         if (cbTipoMov.getSelectedItem().equals("01 - REQUISIÇÃO PADRÃO")
                                 || cbTipoMov.getSelectedItem().equals("02 - REQUISIÇÃO AJUSTE SAIDA")
@@ -2553,8 +2557,12 @@ public class BASE_REQ1 extends javax.swing.JFrame {
                                 || cbTipoMov.getSelectedItem().equals("04 - AJUSTE DE INVENTARIO (SAIDA)")) {
 
                             atualizaEstoque();
+                            salvar();
+
                         } else {
                             atualizaEstoqueEntrada();
+                            salvar();
+
                         }
                     }
                     break;

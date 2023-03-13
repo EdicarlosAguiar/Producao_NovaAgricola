@@ -145,7 +145,7 @@ public class BASE_CONTA_PAGAR extends javax.swing.JFrame {
         tabelaContaPagar.getTableHeader().setOpaque(false);
         tabelaContaPagar.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabelaContaPagar.getTableHeader().setForeground(cor.getCorFonteCabecalho());
-        tabelaContaPagar.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 10));
+        tabelaContaPagar.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, cor.getSizeFonteHenderTable()));
 
         DefaultTableModel modelo = (DefaultTableModel) tabelaContaPagar.getModel();
 

@@ -16,14 +16,15 @@ public class Cores {
     //private Color corLinhaImparTabela = new Color(223, 223, 248); COr Original
     private Color corLinhaImparTabela = new Color(250,250,250);
     private Color corLinhaParTabela = new Color(217,211,211);//[217,211,211]
-    private Color corPreenchimentoCabecalho = new Color(94,110,110);//[94,110,110]new Color(102, 204, 255);//[86,86,86]
-    private Color corFonteCabecalho = Color.WHITE;
-    private Color corFonteDadosTabela = Color.BLACK;
+    private Color corPreenchimentoCabecalho = new Color(255,255,255);//94,110,110)//[94,110,110]new Color(102, 204, 255);//[86,86,86]
+    private Color corFonteCabecalho  = new Color(51,51,51);
+    private Color corFonteDadosTabela = new Color(51,51,51);
     private Color corPreechimentoCabecalhoPDV = new Color(0,102,102);
     private Color corLinhaSelecionada = new Color(0,102,153);
     private Color corFonteLinhaSelecionada = new Color(255,255,255);
     private Color CorFundoLinhaDeletada = new Color(239,237,237);//[239,237,237]
     private Color CorFonteLinhaDeletada = new Color(240,240,240);//[240,240,240]
+    private int sizeFonteHenderTable = 14;
     
     
     //Padrão de Cores Titulos e Fontes
@@ -41,6 +42,33 @@ public class Cores {
     
     //Outros padroes
     private Color corCampoDesabilitado = new Color(240,240,240);
+    private Color corFocuInput = new Color(255,255,153);
+     private Color corFocuSair = new Color(255,255,255);
+
+    public int getSizeFonteHenderTable() {
+        return sizeFonteHenderTable;
+    }
+
+    public void setSizeFonteHenderTable(int sizeFonteHenderTable) {
+        this.sizeFonteHenderTable = sizeFonteHenderTable;
+    }
+     
+
+    public Color getCorFocuSair() {
+        return corFocuSair;
+    }
+
+    public void setCorFocuSair(Color corFocuSair) {
+        this.corFocuSair = corFocuSair;
+    }
+
+    public Color getCorFocuInput() {
+        return corFocuInput;
+    }
+
+    public void setCorFocuInput(Color corFocuInput) {
+        this.corFocuInput = corFocuInput;
+    }
 
     
     

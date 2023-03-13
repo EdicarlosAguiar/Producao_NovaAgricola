@@ -99,6 +99,8 @@ public class NOVO_FORM_COMPRA extends javax.swing.JFrame {
 
     public NOVO_FORM_COMPRA() {
         UIManager.put("ComboBox.background", new ColorUIResource(Color.WHITE));
+        UIManager.put("Border", new ColorUIResource(Color.BLACK));
+        
         UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new java.awt.Color(0, 204, 204)));
         UIManager.put("ComboBox.selectionForeground", new ColorUIResource(new Color(0, 102, 102)));
         initComponents();

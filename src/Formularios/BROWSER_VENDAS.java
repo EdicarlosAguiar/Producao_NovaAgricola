@@ -231,7 +231,7 @@ public class BROWSER_VENDAS extends javax.swing.JFrame {
         tabela.getTableHeader().setOpaque(false);
         tabela.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabela.getTableHeader().setForeground(cor.getCorFonteCabecalho());
-        tabela.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 10));
+        tabela.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, cor.getSizeFonteHenderTable()));
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
 

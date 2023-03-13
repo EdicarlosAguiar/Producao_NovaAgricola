@@ -119,6 +119,8 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
     String dataAtual = dataBase.format(LocalDateTime.now());
     String dataReferencia = dataReferencia1.format(LocalDateTime.now());
 
+    Cores cor = new Cores();
+
     public CADASTRO_PRODUTO() {
         initComponents();
 
@@ -195,7 +197,6 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         txtReentrada.setText(String.valueOf(0));
         txtDosagem.setText(String.valueOf(0));
         txtCarencia.setText(String.valueOf(0));
-     
 
     }
 
@@ -618,7 +619,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             txtCodBarra.setText("");
             txtNome.requestFocus();
             Cadastrais.requestFocus();
-          
+
             txtNome.requestFocus();
 
             pst.close();
@@ -745,8 +746,6 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         txtCodBarra = new javax.swing.JTextField();
         lblBloquear = new javax.swing.JLabel();
         cbBloqueado = new javax.swing.JComboBox<>();
-        jLabel34 = new javax.swing.JLabel();
-        cbNaturezaProduto = new javax.swing.JComboBox<>();
         txtCodigo = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -783,12 +782,15 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         cb_PETQ_001 = new javax.swing.JComboBox<>();
         comercial = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
-        txtPrecoVenda = new javax.swing.JFormattedTextField();
         jLabel38 = new javax.swing.JLabel();
         lblCalcPreco = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtMargem = new javax.swing.JFormattedTextField();
+        jLabel34 = new javax.swing.JLabel();
+        cbNaturezaProduto = new javax.swing.JComboBox<>();
+        txtPrecoVenda = new javax.swing.JFormattedTextField();
+        lblCalcPreco1 = new javax.swing.JLabel();
         Impostos = new javax.swing.JPanel();
         lblBloquear1 = new javax.swing.JLabel();
         cbBloqueado1 = new javax.swing.JComboBox<>();
@@ -816,6 +818,11 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         txtCarencia = new javax.swing.JTextField();
         txtReentrada = new javax.swing.JTextField();
         txtClasse = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel58 = new javax.swing.JLabel();
+        txtCodigo1 = new javax.swing.JTextField();
+        txtNome1 = new javax.swing.JTextField();
+        jLabel59 = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
@@ -833,24 +840,28 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
-        Cadastrais.setBackground(new java.awt.Color(248, 248, 248));
+        Cadastrais.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel17.setForeground(new java.awt.Color(51, 51, 51));
         jLabel17.setText("Codigo:");
 
+        jLabel18.setForeground(new java.awt.Color(51, 51, 51));
         jLabel18.setText("Nome do Produto:");
 
+        jLabel21.setForeground(new java.awt.Color(51, 51, 51));
         jLabel21.setText("U. de Medida:");
 
+        jLabel22.setForeground(new java.awt.Color(51, 51, 51));
         jLabel22.setText("Categoria:");
 
+        jLabel25.setForeground(new java.awt.Color(51, 51, 51));
         jLabel25.setText("Sub Categoria:");
 
         jLabel20.setText("Codigo de Barras");
 
-        cbUnidade.setBackground(new java.awt.Color(102, 102, 102));
-        cbUnidade.setAutoscrolls(true);
-        cbUnidade.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(239, 236, 236), 1, true));
-        cbUnidade.setOpaque(true);
+        cbUnidade.setEditable(true);
+        cbUnidade.setForeground(new java.awt.Color(51, 51, 51));
+        cbUnidade.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         cbUnidade.setPreferredSize(new java.awt.Dimension(28, 25));
         cbUnidade.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -874,6 +885,9 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        txtCodSub.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodSub.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodSub.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodSub.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodSub.setPreferredSize(new java.awt.Dimension(6, 25));
         txtCodSub.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -892,6 +906,9 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        txtCodCat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodCat.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodCat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodCat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodCat.setPreferredSize(new java.awt.Dimension(6, 25));
         txtCodCat.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -910,26 +927,49 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        txtSubCat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtSubCat.setForeground(new java.awt.Color(51, 51, 51));
+        txtSubCat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtSubCat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtSubCat.setPreferredSize(new java.awt.Dimension(6, 25));
 
+        txtCategoria.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCategoria.setForeground(new java.awt.Color(51, 51, 51));
+        txtCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCategoria.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCategoria.setPreferredSize(new java.awt.Dimension(6, 25));
 
+        jLabel23.setForeground(new java.awt.Color(51, 51, 51));
         jLabel23.setText("Cod Cat:");
 
+        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
         jLabel24.setText("Cod Sub:");
 
+        txtNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(51, 51, 51));
+        txtNome.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtNome.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtNome.setPreferredSize(new java.awt.Dimension(6, 25));
+        txtNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNomeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNomeFocusLost(evt);
+            }
+        });
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
             }
         });
 
+        jLabel27.setForeground(new java.awt.Color(51, 51, 51));
         jLabel27.setText("Cod Marca:");
 
+        txtCodMarca.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodMarca.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodMarca.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodMarca.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodMarca.setPreferredSize(new java.awt.Dimension(6, 25));
         txtCodMarca.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -948,13 +988,21 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        jLabel28.setForeground(new java.awt.Color(51, 51, 51));
         jLabel28.setText("Marca:");
 
+        txtMarca.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtMarca.setForeground(new java.awt.Color(51, 51, 51));
+        txtMarca.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtMarca.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMarca.setPreferredSize(new java.awt.Dimension(6, 25));
 
+        jLabel29.setForeground(new java.awt.Color(51, 51, 51));
         jLabel29.setText("Cod Fab:");
 
+        txtCodFab.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodFab.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodFab.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodFab.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodFab.setPreferredSize(new java.awt.Dimension(6, 25));
         txtCodFab.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -973,8 +1021,12 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        jLabel35.setForeground(new java.awt.Color(51, 51, 51));
         jLabel35.setText("Fabricante:");
 
+        txtFabricante.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtFabricante.setForeground(new java.awt.Color(51, 51, 51));
+        txtFabricante.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtFabricante.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtFabricante.setPreferredSize(new java.awt.Dimension(6, 25));
         txtFabricante.addActionListener(new java.awt.event.ActionListener() {
@@ -983,6 +1035,8 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        txtCodBarra.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodBarra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodBarra.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodBarra.setEnabled(false);
         txtCodBarra.setPreferredSize(new java.awt.Dimension(6, 25));
@@ -997,21 +1051,28 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        lblBloquear.setForeground(new java.awt.Color(51, 51, 51));
         lblBloquear.setText("Bloqueado:");
 
-        cbBloqueado.setBackground(new java.awt.Color(102, 102, 102));
+        cbBloqueado.setEditable(true);
+        cbBloqueado.setForeground(new java.awt.Color(51, 51, 51));
         cbBloqueado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         cbBloqueado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
 
-        jLabel34.setText("Natureza comercial do Produto:");
-
-        cbNaturezaProduto.setBackground(new java.awt.Color(102, 102, 102));
-        cbNaturezaProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRODUTO PARA REVENDA", "PRODUÇÃO PROPRIA PARA VENDA", "OUTROS" }));
-        cbNaturezaProduto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
-
+        txtCodigo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(51, 51, 51));
         txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCodigo.setBorder(null);
+        txtCodigo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtCodigo.setEnabled(false);
+        txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodigoFocusLost(evt);
+            }
+        });
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoActionPerformed(evt);
@@ -1042,8 +1103,12 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel33.setText("*");
         jLabel33.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jLabel36.setForeground(new java.awt.Color(51, 51, 51));
         jLabel36.setText("Armazem Padrão:");
 
+        txtCodFab1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodFab1.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodFab1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCodFab1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCodFab1.setPreferredSize(new java.awt.Dimension(6, 25));
         txtCodFab1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1062,8 +1127,12 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
-        jLabel37.setText("Data Criação:");
+        jLabel37.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel37.setText("Data cadastro:");
 
+        txtData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtData.setForeground(new java.awt.Color(51, 51, 51));
+        txtData.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtData.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtData.setPreferredSize(new java.awt.Dimension(6, 25));
         txtData.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1082,8 +1151,12 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
-        jLabel39.setText("Data Alteração");
+        jLabel39.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel39.setText("Ultima alteração:");
 
+        txtDataAlteracao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtDataAlteracao.setForeground(new java.awt.Color(51, 51, 51));
+        txtDataAlteracao.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtDataAlteracao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtDataAlteracao.setPreferredSize(new java.awt.Dimension(6, 25));
         txtDataAlteracao.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1102,8 +1175,12 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        jLabel51.setForeground(new java.awt.Color(51, 51, 51));
         jLabel51.setText("Descrição especifica:");
 
+        txtDesEspecifica.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtDesEspecifica.setForeground(new java.awt.Color(51, 51, 51));
+        txtDesEspecifica.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtDesEspecifica.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtDesEspecifica.setPreferredSize(new java.awt.Dimension(6, 25));
         txtDesEspecifica.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1142,11 +1219,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbBloqueado, 0, 73, Short.MAX_VALUE)
-                            .addComponent(lblBloquear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel34)
-                            .addComponent(cbNaturezaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblBloquear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(CadastraisLayout.createSequentialGroup()
                         .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1228,7 +1301,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                 .addComponent(jLabel20)
                 .addGap(11, 11, 11)
                 .addComponent(txtCodBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
                 .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(CadastraisLayout.createSequentialGroup()
                         .addComponent(lblBloquear)
@@ -1255,48 +1328,42 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                                 .addComponent(jLabel51)
                                 .addGap(11, 11, 11)
                                 .addComponent(txtDesEspecifica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(9, 9, 9)
-                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CadastraisLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(CadastraisLayout.createSequentialGroup()
                                 .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(CadastraisLayout.createSequentialGroup()
-                                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel28)
-                                            .addComponent(jLabel27))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtCodMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(CadastraisLayout.createSequentialGroup()
-                                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel23)
-                                            .addComponent(jLabel32)
-                                            .addComponent(jLabel22))
-                                        .addGap(11, 11, 11)
-                                        .addComponent(txtCodCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(CadastraisLayout.createSequentialGroup()
-                                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel24)
-                                            .addComponent(jLabel25)
-                                            .addComponent(jLabel33))
-                                        .addGap(10, 10, 10)
-                                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtCodSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtSubCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel27))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtCodMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(CadastraisLayout.createSequentialGroup()
+                                .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel32)
+                                    .addComponent(jLabel22))
+                                .addGap(11, 11, 11)
+                                .addComponent(txtCodCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(CadastraisLayout.createSequentialGroup()
+                                .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel33))
                                 .addGap(10, 10, 10)
                                 .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel35)
-                                    .addComponent(jLabel29))
-                                .addGap(11, 11, 11)
-                                .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCodFab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CadastraisLayout.createSequentialGroup()
-                                .addComponent(jLabel34)
-                                .addGap(11, 11, 11)
-                                .addComponent(cbNaturezaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(18, 18, 18)
+                                    .addComponent(txtCodSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSubCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(20, 20, 20)
+                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel29))
+                        .addGap(11, 11, 11)
+                        .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCodFab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(20, 20, 20)
                 .addGroup(CadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CadastraisLayout.createSequentialGroup()
                         .addComponent(jLabel36)
@@ -1310,17 +1377,17 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                         .addComponent(jLabel39)
                         .addGap(11, 11, 11)
                         .addComponent(txtDataAlteracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("CADASTRAIS", Cadastrais);
+        jTabbedPane1.addTab("Dados genericos", Cadastrais);
 
-        Estoque.setBackground(new java.awt.Color(248, 248, 248));
+        Estoque.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel41.setText("Estoque Inicial:");
         jLabel41.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtEstoqueInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtEstoqueInicial.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtEstoqueInicial.setForeground(new java.awt.Color(51, 51, 51));
         txtEstoqueInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtEstoqueInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1347,7 +1414,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel42.setText("Valor Inicial");
         jLabel42.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtValorInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtValorInicial.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtValorInicial.setForeground(new java.awt.Color(51, 51, 51));
         txtValorInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtValorInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1373,7 +1440,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel43.setText("Custo Inicial");
         jLabel43.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtPrecoCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtPrecoCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtPrecoCompra.setForeground(new java.awt.Color(51, 51, 51));
         txtPrecoCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtPrecoCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1400,7 +1467,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel44.setText("Estoque Atual");
         jLabel44.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtSaldoAtual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtSaldoAtual.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtSaldoAtual.setForeground(new java.awt.Color(51, 51, 51));
         txtSaldoAtual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtSaldoAtual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1427,7 +1494,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel45.setText("Custo Atual");
         jLabel45.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtCustoAtual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtCustoAtual.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtCustoAtual.setForeground(new java.awt.Color(51, 51, 51));
         txtCustoAtual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtCustoAtual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1454,7 +1521,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel46.setText("Valor Atual");
         jLabel46.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtValorAtual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtValorAtual.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtValorAtual.setForeground(new java.awt.Color(51, 51, 51));
         txtValorAtual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtValorAtual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1480,7 +1547,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel47.setText("Ultima Compra");
         jLabel47.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtUltimaCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtUltimaCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtUltimaCompra.setForeground(new java.awt.Color(51, 51, 51));
         txtUltimaCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtUltimaCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1507,7 +1574,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel48.setText("Ultima Venda");
         jLabel48.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtUltimaVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtUltimaVenda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtUltimaVenda.setForeground(new java.awt.Color(51, 51, 51));
         txtUltimaVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtUltimaVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1534,7 +1601,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         jLabel49.setText("Ultima Requisição");
         jLabel49.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtUltimaReq.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtUltimaReq.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtUltimaReq.setForeground(new java.awt.Color(51, 51, 51));
         txtUltimaReq.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtUltimaReq.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1556,9 +1623,9 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
-        jLabel26.setText("Perminite baixa sem saldo?");
+        jLabel26.setText("Baixa sem estoque?");
 
-        cb_PETQ_001.setBackground(new java.awt.Color(102, 102, 102));
+        cb_PETQ_001.setEditable(true);
         cb_PETQ_001.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "N" }));
         cb_PETQ_001.setAutoscrolls(true);
         cb_PETQ_001.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(239, 236, 236), 1, true));
@@ -1631,8 +1698,8 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                             .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(EstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_PETQ_001, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_PETQ_001, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(410, Short.MAX_VALUE))
         );
         EstoqueLayout.setVerticalGroup(
@@ -1688,40 +1755,15 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                         .addComponent(jLabel26)
                         .addGap(11, 11, 11)
                         .addComponent(cb_PETQ_001, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("ESTOQUE", Estoque);
+        jTabbedPane1.addTab("Estoque - suprimentos", Estoque);
 
-        comercial.setBackground(new java.awt.Color(248, 248, 248));
+        comercial.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel31.setText("Preco de Venda:");
         jLabel31.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        txtPrecoVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        txtPrecoVenda.setForeground(new java.awt.Color(51, 51, 51));
-        txtPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        txtPrecoVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPrecoVenda.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtPrecoVenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtPrecoVenda.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPrecoVendaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPrecoVendaFocusLost(evt);
-            }
-        });
-        txtPrecoVenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPrecoVendaMouseClicked(evt);
-            }
-        });
-        txtPrecoVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecoVendaActionPerformed(evt);
-            }
-        });
 
         jLabel38.setText("Margem Bruta %:");
         jLabel38.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -1740,7 +1782,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         });
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jPanel8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         jLabel8.setBackground(new java.awt.Color(208, 227, 208));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -1785,6 +1827,53 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             .addComponent(txtMargem)
         );
 
+        jLabel34.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel34.setText("Natureza comercial do Produto:");
+
+        cbNaturezaProduto.setEditable(true);
+        cbNaturezaProduto.setForeground(new java.awt.Color(51, 51, 51));
+        cbNaturezaProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRODUTO PARA REVENDA", "PRODUÇÃO PROPRIA PARA VENDA", "OUTROS" }));
+        cbNaturezaProduto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        txtPrecoVenda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        txtPrecoVenda.setForeground(new java.awt.Color(51, 51, 51));
+        txtPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtPrecoVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPrecoVenda.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtPrecoVenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtPrecoVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPrecoVendaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecoVendaFocusLost(evt);
+            }
+        });
+        txtPrecoVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPrecoVendaMouseClicked(evt);
+            }
+        });
+        txtPrecoVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecoVendaActionPerformed(evt);
+            }
+        });
+
+        lblCalcPreco1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens2/calculadora.png"))); // NOI18N
+        lblCalcPreco1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCalcPreco1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCalcPreco1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCalcPreco1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCalcPreco1MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout comercialLayout = new javax.swing.GroupLayout(comercial);
         comercial.setLayout(comercialLayout);
         comercialLayout.setHorizontalGroup(
@@ -1794,62 +1883,78 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                 .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(comercialLayout.createSequentialGroup()
-                        .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecoVenda)
-                            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                        .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                                .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                            .addGroup(comercialLayout.createSequentialGroup()
+                                .addComponent(txtPrecoVenda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCalcPreco1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCalcPreco)))
-                .addContainerGap(1023, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel34)
+                    .addComponent(cbNaturezaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(760, Short.MAX_VALUE))
         );
         comercialLayout.setVerticalGroup(
             comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(comercialLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel38)
-                .addGap(11, 11, 11)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(comercialLayout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addGap(11, 11, 11)
+                        .addComponent(cbNaturezaProduto))
+                    .addGroup(comercialLayout.createSequentialGroup()
+                        .addComponent(jLabel38)
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel31)
-                .addGap(11, 11, 11)
-                .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblCalcPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPrecoVenda))
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCalcPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(comercialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblCalcPreco1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("COMERCIAL", comercial);
+        jTabbedPane1.addTab("Comercial", comercial);
 
-        Impostos.setBackground(new java.awt.Color(248, 248, 248));
+        Impostos.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblBloquear1.setText("Calculo PIS?");
+        lblBloquear1.setText("PIS:");
 
-        cbBloqueado1.setBackground(new java.awt.Color(102, 102, 102));
+        cbBloqueado1.setEditable(true);
         cbBloqueado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         cbBloqueado1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
 
-        lblBloquear2.setText("Calcula COFINS?");
+        lblBloquear2.setText("COFINS:");
 
-        cbBloqueado2.setBackground(new java.awt.Color(102, 102, 102));
+        cbBloqueado2.setEditable(true);
         cbBloqueado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         cbBloqueado2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
 
-        lblBloquear3.setText("Calcula IPI?");
+        lblBloquear3.setText("IPI:");
 
-        cbBloqueado3.setBackground(new java.awt.Color(102, 102, 102));
+        cbBloqueado3.setEditable(true);
         cbBloqueado3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         cbBloqueado3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
 
-        lblBloquear4.setText("Calcula ICMS?");
+        lblBloquear4.setText("ICMS:");
 
-        cbBloqueado4.setBackground(new java.awt.Color(102, 102, 102));
+        cbBloqueado4.setEditable(true);
         cbBloqueado4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         cbBloqueado4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(239, 236, 236)));
 
         jLabel40.setText("NCM:");
         jLabel40.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtNCM.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtNCM.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtNCM.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtNCM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNCM.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -1931,23 +2036,26 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
                         .addComponent(lblBloquear2)
                         .addGap(11, 11, 11)
                         .addComponent(cbBloqueado2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("IMPOSTOS", Impostos);
+        jTabbedPane1.addTab("Tirubutos", Impostos);
 
-        Impostos1.setBackground(new java.awt.Color(248, 248, 248));
+        Impostos1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel50.setForeground(new java.awt.Color(51, 51, 51));
         jLabel50.setText("Garantias/Principio Ativo:");
         jLabel50.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        jLabel52.setForeground(new java.awt.Color(51, 51, 51));
         jLabel52.setText("Justificativa:");
         jLabel52.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        jLabel53.setForeground(new java.awt.Color(51, 51, 51));
         jLabel53.setText("Carencia (Dias):");
         jLabel53.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        txtDosagem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtDosagem.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
         txtDosagem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtDosagem.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtDosagem.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -1967,19 +2075,36 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
+        jLabel54.setForeground(new java.awt.Color(51, 51, 51));
         jLabel54.setText("Dosagem Ha:");
         jLabel54.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        jLabel55.setForeground(new java.awt.Color(51, 51, 51));
         jLabel55.setText("Reent. s/ EPI.");
         jLabel55.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        jLabel56.setForeground(new java.awt.Color(51, 51, 51));
         jLabel56.setText("Classificação toxicologica:");
         jLabel56.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        cbClassTox.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cbClassTox.setForeground(new java.awt.Color(51, 51, 51));
         cbClassTox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - Não se aplica", "1 - Extremamente tóxico (vermelha)", "2 - Altamente tóxico (amarela)", "3 - Moderadamente  tóxico (verde)", "4 - Pouco tóxico (azul)" }));
+        cbClassTox.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
+        jLabel57.setForeground(new java.awt.Color(51, 51, 51));
         jLabel57.setText("Classe:");
         jLabel57.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        txtGarantias.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        txtJustificativa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        txtCarencia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        txtReentrada.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+
+        txtClasse.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         javax.swing.GroupLayout Impostos1Layout = new javax.swing.GroupLayout(Impostos1);
         Impostos1.setLayout(Impostos1Layout);
@@ -1987,71 +2112,149 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Impostos1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbClassTox, 0, 263, Short.MAX_VALUE)
-                    .addComponent(jLabel50)
-                    .addComponent(jLabel56)
-                    .addComponent(txtGarantias))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel57)
                     .addGroup(Impostos1Layout.createSequentialGroup()
-                        .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtClasse, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(Impostos1Layout.createSequentialGroup()
-                                    .addComponent(jLabel52)
-                                    .addGap(205, 205, 205)
-                                    .addComponent(jLabel53))
-                                .addGroup(Impostos1Layout.createSequentialGroup()
-                                    .addComponent(txtJustificativa, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtCarencia, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtGarantias, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtJustificativa, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCarencia, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel54)
-                            .addComponent(txtDosagem, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(Impostos1Layout.createSequentialGroup()
+                                .addComponent(txtDosagem, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtReentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(Impostos1Layout.createSequentialGroup()
                         .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel55)
-                            .addComponent(txtReentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel50)
+                            .addComponent(jLabel56)
+                            .addComponent(cbClassTox, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54)
+                        .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtClasse)
+                            .addComponent(jLabel57)
+                            .addGroup(Impostos1Layout.createSequentialGroup()
+                                .addComponent(jLabel52)
+                                .addGap(205, 205, 205)
+                                .addComponent(jLabel53)
+                                .addGap(146, 146, 146)
+                                .addComponent(jLabel55)))))
                 .addContainerGap(244, Short.MAX_VALUE))
         );
         Impostos1Layout.setVerticalGroup(
             Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Impostos1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Impostos1Layout.createSequentialGroup()
-                        .addComponent(jLabel54)
-                        .addGap(11, 11, 11)
-                        .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDosagem, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtReentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCarencia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtJustificativa, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGarantias, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(Impostos1Layout.createSequentialGroup()
-                        .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel55)
-                            .addComponent(jLabel53)
-                            .addComponent(jLabel52)
-                            .addComponent(jLabel50))
-                        .addGap(35, 35, 35)))
-                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Impostos1Layout.createSequentialGroup()
-                        .addComponent(jLabel56)
-                        .addGap(34, 34, 34))
+                .addGap(20, 20, 20)
+                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel55, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel53)
+                        .addComponent(jLabel54))
+                    .addComponent(jLabel52, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(15, 15, 15)
+                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDosagem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbClassTox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtClasse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtReentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCarencia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtJustificativa, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtGarantias, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(11, 11, 11)
+                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel56)
+                    .addComponent(jLabel57))
+                .addGroup(Impostos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Impostos1Layout.createSequentialGroup()
-                        .addComponent(jLabel57)
-                        .addGap(35, 35, 35)))
-                .addContainerGap(285, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(cbClassTox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Impostos1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtClasse, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(287, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("AGRO", Impostos1);
+        jTabbedPane1.addTab("Agro", Impostos1);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel58.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel58.setText("CV");
+
+        txtCodigo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCodigo1.setForeground(new java.awt.Color(51, 51, 51));
+        txtCodigo1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCodigo1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        txtCodigo1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtCodigo1.setEnabled(false);
+        txtCodigo1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigo1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodigo1FocusLost(evt);
+            }
+        });
+        txtCodigo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigo1ActionPerformed(evt);
+            }
+        });
+
+        txtNome1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtNome1.setForeground(new java.awt.Color(51, 51, 51));
+        txtNome1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        txtNome1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtNome1.setPreferredSize(new java.awt.Dimension(6, 25));
+        txtNome1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNome1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNome1FocusLost(evt);
+            }
+        });
+        txtNome1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNome1ActionPerformed(evt);
+            }
+        });
+
+        jLabel59.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel59.setText("Nome do Produto:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel59)
+                    .addComponent(txtNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(832, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel58)
+                    .addComponent(jLabel59))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(352, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Oficinas/Revendas", jPanel1);
 
         btnConfirmar.setBackground(new java.awt.Color(0, 153, 153));
         btnConfirmar.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -2113,8 +2316,8 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
             }
         });
 
-        lblTitulo.setBackground(new java.awt.Color(238, 234, 234));
-        lblTitulo.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        lblTitulo.setBackground(new java.awt.Color(204, 204, 204));
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 51, 102));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Cadastro de Produto - Incluir");
@@ -2524,32 +2727,6 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_PETQ_001KeyTyped
 
-    private void txtPrecoVendaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoVendaFocusGained
-        txtPrecoVenda.selectAll();        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoVendaFocusGained
-
-    private void txtPrecoVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoVendaFocusLost
-        if (txtPrecoVenda.getText().equals("")) {
-
-        } else {
-            DecimalFormat df = new DecimalFormat("#,##0.00");
-
-            Double qtde = Double.parseDouble(txtPrecoVenda.getText().replace(".", "").replaceAll(",", "."));
-
-            String quantidade = df.format(qtde);
-            txtPrecoVenda.setText(quantidade);
-
-        }
-    }//GEN-LAST:event_txtPrecoVendaFocusLost
-
-    private void txtPrecoVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrecoVendaMouseClicked
-        txtPrecoVenda.selectAll();         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoVendaMouseClicked
-
-    private void txtPrecoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoVendaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoVendaActionPerformed
-
     private void lblCalcPrecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalcPrecoMouseClicked
 
         this.setCodigo(txtCodigo.getText());
@@ -2721,6 +2898,101 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDesEspecificaKeyPressed
 
+    private void txtCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusGained
+        txtCodigo.setBackground(cor.getCorFocuInput());
+    }//GEN-LAST:event_txtCodigoFocusGained
+
+    private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
+        txtCodigo.setBackground(cor.getCorFocuSair());
+    }//GEN-LAST:event_txtCodigoFocusLost
+
+    private void txtNomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomeFocusGained
+          txtNome.setBackground(cor.getCorFocuInput());
+    }//GEN-LAST:event_txtNomeFocusGained
+
+    private void txtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomeFocusLost
+       txtNome.setBackground(cor.getCorFocuSair());
+    }//GEN-LAST:event_txtNomeFocusLost
+
+    private void txtPrecoVendaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoVendaFocusGained
+        txtPrecoVenda.selectAll();        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoVendaFocusGained
+
+    private void txtPrecoVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoVendaFocusLost
+        if (txtPrecoVenda.getText().equals("")) {
+
+        } else {
+            DecimalFormat df = new DecimalFormat("#,##0.00");
+
+            Double qtde = Double.parseDouble(txtPrecoVenda.getText().replace(".", "").replaceAll(",", "."));
+
+            String quantidade = df.format(qtde);
+            txtPrecoVenda.setText(quantidade);
+
+        }
+    }//GEN-LAST:event_txtPrecoVendaFocusLost
+
+    private void txtPrecoVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrecoVendaMouseClicked
+        txtPrecoVenda.selectAll();         // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoVendaMouseClicked
+
+    private void txtPrecoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoVendaActionPerformed
+
+    private void lblCalcPreco1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalcPreco1MouseClicked
+
+        this.setCodigo(txtCodigo.getText());
+        this.setNome(txtNome.getText());
+        this.setMargem(txtMargem.getText());
+        JD_CALCULO_PRECO calc = new JD_CALCULO_PRECO(this, true);
+        calc.pegapProduto(this);
+        calc.buscaUltimaCompra(this.getCodigo());
+
+        calc.setVisible(true);
+        String respPreco = calc.getRespostaPrecificacao();
+
+        if (respPreco == "S") {
+            String preco = calc.getPreco();
+            txtPrecoVenda.setText(preco);
+        } else {
+
+        }
+
+    }//GEN-LAST:event_lblCalcPreco1MouseClicked
+
+    private void lblCalcPreco1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalcPreco1MouseEntered
+        lblCalcPreco.setBackground(new java.awt.Color(94, 100, 100));
+    }//GEN-LAST:event_lblCalcPreco1MouseEntered
+
+    private void lblCalcPreco1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCalcPreco1MouseExited
+        lblCalcPreco.setBackground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_lblCalcPreco1MouseExited
+
+    private void txtCodigo1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigo1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigo1FocusGained
+
+    private void txtCodigo1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigo1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigo1FocusLost
+
+    private void txtCodigo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigo1ActionPerformed
+
+    private void txtNome1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNome1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNome1FocusGained
+
+    private void txtNome1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNome1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNome1FocusLost
+
+    private void txtNome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNome1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNome1ActionPerformed
+  
     /**
      * @param args the command line arguments
      */
@@ -2816,7 +3088,10 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblBloquear;
@@ -2825,6 +3100,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
     private javax.swing.JLabel lblBloquear3;
     private javax.swing.JLabel lblBloquear4;
     private javax.swing.JLabel lblCalcPreco;
+    private javax.swing.JLabel lblCalcPreco1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel painelCorpo;
     private javax.swing.JTextField txtCarencia;
@@ -2837,6 +3113,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
     private javax.swing.JTextField txtCodMarca;
     private javax.swing.JTextField txtCodSub;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtCodigo1;
     private javax.swing.JFormattedTextField txtCustoAtual;
     private javax.swing.JTextField txtData;
     private javax.swing.JTextField txtDataAlteracao;
@@ -2850,6 +3127,7 @@ public class CADASTRO_PRODUTO extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtMargem;
     private javax.swing.JFormattedTextField txtNCM;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNome1;
     private javax.swing.JFormattedTextField txtPrecoCompra;
     private javax.swing.JFormattedTextField txtPrecoVenda;
     private javax.swing.JTextField txtReentrada;

@@ -145,7 +145,7 @@ public class BASE_CONTA_RECEBER extends javax.swing.JFrame {
         tabelaContaReceber.getTableHeader().setOpaque(false);
         tabelaContaReceber.getTableHeader().setBackground(cor.getCorPreenchimentoCabecalho());
         tabelaContaReceber.getTableHeader().setForeground(cor.getCorFonteCabecalho());
-        tabelaContaReceber.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 10));
+        tabelaContaReceber.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, cor.getSizeFonteHenderTable()));
 
         DefaultTableModel modelo = (DefaultTableModel) tabelaContaReceber.getModel();
 
